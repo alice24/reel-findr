@@ -20,6 +20,10 @@ h1{
 	-webkit-flex-direction: column;
 }
 
+#genre, #decade, #sfx{
+	display:none;
+}
+
 .top{
 	width:100%;
 	background:black;
@@ -40,7 +44,7 @@ h1{
 }
 
 /*
-How to select specific classes within an ID
+How to select specific 
 #page3 .answer{
 	display:none;
 }

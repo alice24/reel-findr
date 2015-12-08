@@ -1,4 +1,7 @@
-var pages = ["page1","page2","page3"];
+var pages = ["page1","page2","page3","page4"];
+
+var forms = ["genre","decade","sfx"];
+
 var counter = 0;
 var reverseCounter = 3;
 
@@ -6,22 +9,26 @@ var container;
 var client;
 var clientHeight;
 
+var selection;
+
 window.onload = function() {
 	if (document.getElementById('overflow')){
 		adjustHeight();
 	}
 };
 
+function chooseAnswer(){
+	selection = event.currentTarget.id;
+
+	document.getElementById(forms[counter]).value =selection;
+	nextQuestion();
+}
+
 function nextQuestion(){
 	document.getElementById(pages[counter]).style.order = reverseCounter;
 	reverseCounter --;
 	console.log("next question!");
 	counter++;
-	
-	if (counter == pages.length){
-		window.location.href = "results.html";
-		return;
-	}
 	
 	console.log(pages[counter]);
 	

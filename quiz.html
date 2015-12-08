@@ -13,18 +13,19 @@
 		<div class="top">
 			<header><h1>REEL-FINDR</h1></header>
 		</div>
-
+		
 		<div class="content">
+			<form action="results.php" id="quiz" method="get">
 			<div class="overflow" id="overflow">
+
 				<!-- splash page -->
 				<div class="question" id="page1">
 					<h2>What genre are you interested in?</h2>
 					<div class="answer">
-						<img src="img/start.gif" style="width:50%;" onClick="nextQuestion()">
-						<br><img src="img/start.gif" style="width:50%;" onClick="nextQuestion()">
-						<br><img src="img/start.gif" style="width:50%;" onClick="nextQuestion()">
-						<br><img src="img/start.gif" style="width:50%;" onClick="nextQuestion()">
-						<br><img src="img/start.gif" style="width:50%;" onClick="nextQuestion()">
+						<input type="text" name="genre" value="default" id="genre"><br>
+						<input type="button" onClick="chooseAnswer(this)" id="romance" value="romance">
+						<input type="button" onClick="chooseAnswer(this)" id="comedy" value="comedy">
+						<input type="button" onClick="chooseAnswer(this)" id="thriller" value="thriller">
 					</div>
 				</div>
 
@@ -32,7 +33,10 @@
 				<div class="question" id="page2">
 					<h2>What decade is your movie from?</h2>
 					<div class="answer">
-						<img src="img/start.gif" style="width:50%;" onClick="nextQuestion()">
+						<input type="text" name="decade" value="default" id="decade"><br>
+						<input type="button" onClick="chooseAnswer(this)" id="1990's" value="1990's">
+						<input type="button" onClick="chooseAnswer(this)" id="2000's" value="2000's">
+						<input type="button" onClick="chooseAnswer(this)" id="2010's" value="2010's">
 					</div>
 				</div>
 
@@ -40,10 +44,19 @@
 				<div class="question" id="page3">
 					<h2>Do you love special effects?</h2>
 					<div class="answer">
-						<img src="img/start.gif" style="width:50%;" onClick="nextQuestion()">
+						<input type="text" name="sfx" value="default" id="sfx"><br>
+						<input type="button" onClick="chooseAnswer(this)" id="No" value="No">
+						<input type="button" onClick="chooseAnswer(this)" id="Yes" value="Yes">
+					</div>
+				</div>
+				
+				<div class="question" id="page4">
+					<div class="answer">
+						<input type="submit" name="submit">
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 		<div class="footer">
 			<footer>

@@ -17,6 +17,21 @@
 		</div>
 
 		<div class="content">
+			<section>
+				<?php
+					echo "<h2>";
+					echo "Genre: <b>" . $_GET['genre'] . "</b>";
+					echo "</h2>";
+
+					echo "<h2>";			
+					echo "Decade: <b>" . $_GET['decade'] . "</b>";
+					echo "</h2>";
+					
+					echo "<h2>";			
+					echo "SFX: <b>" . $_GET['sfx'] . "</b>";
+					echo "</h2>";
+				?>
+			</section>
 		</div>
 		
 		<div class="footer">
