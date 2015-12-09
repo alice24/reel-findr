@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*adds  acomment in everything*/
 
 * {	font-family: 'Open Sans';
@@ -5,6 +6,8 @@
 
 }
 
+=======
+>>>>>>> a5a06f295ebbc5c3b82c9362c63f748a9a3b3412
 html, body{
 	margin: 0;
 	padding: 0;
@@ -13,6 +16,7 @@ html, body{
 
 h1{
 	font-size:4em;
+<<<<<<< HEAD
 	font-weight: 300;
 	text-align:center;
 	color:black;
@@ -27,6 +31,13 @@ span{
 	font-weight: 800;
 }
 
+=======
+	text-align:center;
+	color:white;
+	margin:15px 15px 0px 15px;
+}
+
+>>>>>>> a5a06f295ebbc5c3b82c9362c63f748a9a3b3412
 .container{
 	position:absolute;
 	background:gray;
@@ -42,10 +53,17 @@ span{
 
 .top{
 	width:100%;
+<<<<<<< HEAD
 	background-color: #FFDD00;
 	font-weight: 300;
 	position: relative;
     z-index: 5;
+=======
+	background:black;
+	position: relative;
+    z-index: 5;
+	-webkit-box-shadow: 0px 3px 1px 0px rgba(0,0,0,0.5);
+>>>>>>> a5a06f295ebbc5c3b82c9362c63f748a9a3b3412
 }
 
 .content{
@@ -54,11 +72,16 @@ span{
 	-webkit-align-items:center;
 	text-align:center;
 	width:100%;
+<<<<<<< HEAD
 	background:white;
+=======
+	background:gray;
+>>>>>>> a5a06f295ebbc5c3b82c9362c63f748a9a3b3412
 	padding: 10px 0px 10px 0px;
 	-webkit-flex: 1 1 auto;
 }
 
+<<<<<<< HEAD
 .button {
 
   background-color: white;
@@ -86,6 +109,10 @@ span{
 
 /*
 How to select specific
+=======
+/*
+How to select specific 
+>>>>>>> a5a06f295ebbc5c3b82c9362c63f748a9a3b3412
 #page3 .answer{
 	display:none;
 }
@@ -107,6 +134,10 @@ How to select specific
 	background:black;
 	padding: 10px 0px 10px 0px;
 	height:3rem;
+<<<<<<< HEAD
+=======
+	-webkit-box-shadow: 0px -3px 1px 0px rgba(0,0,0,0.5);
+>>>>>>> a5a06f295ebbc5c3b82c9362c63f748a9a3b3412
 }
 
 .foot{
@@ -123,4 +154,8 @@ How to select specific
 /*to remove the social media during quiz so they can't accidentally click out*/
 .hideme{
 	display:none;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> a5a06f295ebbc5c3b82c9362c63f748a9a3b3412
