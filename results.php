@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-<!-- a backup page in case we need it -->
-
->>>>>>> a5a06f295ebbc5c3b82c9362c63f748a9a3b3412
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +5,6 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="icon" type="image/png" href="img/favicon.png">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
-
 	<script src='js/script.js'></script>	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
