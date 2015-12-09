@@ -16,7 +16,7 @@ window.onload = function() {
 		adjustHeight();
 	}
 };
-
+//console.log();
 function chooseAnswer(){
 	selection = event.currentTarget.id;
 
