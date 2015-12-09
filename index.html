@@ -26,8 +26,8 @@
 
 						<h2>Let us help you!</h2>
 
-						<!-- submit button -->
-						<div class="submitbutton"><button type="button" class="button" onClick="nextQuestion()">Submit</button></div>
+						<!-- start button -->
+						<div class="submitbutton"><button type="button" class="button" onClick="nextQuestion()">Start</button></div>
 					</section>
 				</div>
 
@@ -35,10 +35,18 @@
 				<div class="question" id="page1">
 					<h2>What genre are you interested in?</h2>
 					<div class="answer">
+						<div class=button-area>
 						<input type="text" name="genre" value="default" id="genre"><br>
 						<input type="button" onClick="chooseAnswer(this)" id="romance" value="romance">
 						<input type="button" onClick="chooseAnswer(this)" id="comedy" value="comedy">
 						<input type="button" onClick="chooseAnswer(this)" id="thriller" value="thriller">
+						<input type="button" onClick="chooseAnswer(this)" id="action" value="action">
+						<input type="button" onClick="chooseAnswer(this)" id="history" value="history">
+						<input type="button" onClick="chooseAnswer(this)" id="sports" value="sports">
+						<input type="button" onClick="chooseAnswer(this)" id="sci-fi" value="sci-fi">
+						<input type="button" onClick="chooseAnswer(this)" id="animation" value="animation">
+						<input type="button" onClick="chooseAnswer(this)" id="crime" value="crime">
+					</div>
 					</div>
 				</div>
 
@@ -63,7 +71,17 @@
 					</div>
 				</div>
 
+				<!-- storyline -->
 				<div class="question" id="page4">
+					<h2>Do you like complex plots?</h2>
+					<div class="answer">
+						<!-- <input type="text" name="plot" value="default" id="plots"><br> -->
+						<input type="button" onClick="chooseAnswer(this)" id="No" value="No">
+						<input type="button" onClick="chooseAnswer(this)" id="Yes" value="Yes">
+					</div>
+				</div>
+
+				<div class="question" id="page5">
 					<div class="answer">
 						<input type="submit" name="submit">
 					</div>
