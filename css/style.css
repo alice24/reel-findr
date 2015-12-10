@@ -34,7 +34,7 @@ span{
 	-webkit-flex-direction: column;
 }
 
-#genre, #decade, #sfx, #plot{
+#genre, #decade, #sfx, #plot, #minYear, #maxYear{
 	display:none;
 }
 
@@ -82,7 +82,7 @@ span{
   color: white;
 }
 
-#romance, #comedy, #thriller, #action, #history, #sports, #animation, #sci-fi, #crime{
+#romance, #comedy, #thriller, #action, #history, #sports, #animation, #sci-fi, #crime, #year{
 	background-color: white;
   font-size: 1.6em;
   text-transform: uppercase;
@@ -100,7 +100,7 @@ span{
 
 }
 
-#romance:hover, #comedy:hover, #thriller:hover, #action:hover, #history:hover, #sports:hover, #animation:hover, #sci-fi:hover, #crime:hover{
+#romance:hover, #comedy:hover, #thriller:hover, #action:hover, #history:hover, #sports:hover, #animation:hover, #sci-fi:hover, #crime:hover, #year:hover{
 	transform: scale(1.1);
 	background-color: black;
 	color: white;
@@ -166,3 +166,106 @@ How to select specific
 .hideme{
 	display:none;
 }
+
+
+
+
+
+
+
+
+
+
+
+/*changes colour of slider (not active)*/
+[id*=flat-slider].ui-slider,
+[id*=flat-slider].ui-slider .ui-slider-pip .ui-slider-line {
+  background: yellow;
+}
+
+/*changes border of slider*/
+[id*=flat-slider].ui-slider .ui-slider-handle.ui-state-hover,
+[id*=flat-slider].ui-slider .ui-slider-handle.ui-state-focus,
+[id*=flat-slider].ui-slider .ui-slider-handle.ui-state-active {
+  border-color: black;
+}
+
+/*needs to go in a div or it dies*/
+.stuff {
+  padding: 50px 50px 50px;
+  max-width: 700px;
+  margin: auto;
+}
+
+body {
+  background: #555555;
+}
+
+#chosenYears{
+  font-size:3em;
+  padding-bottom: 30px;
+}
+
+*:focus{
+  outline:none;
+}
+
+#flat-slider.ui-slider {
+  background: tomato;
+  border: none;
+  border-radius: 0; }
+
+  #flat-slider.ui-slider .ui-slider-handle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50% 50% 0;
+    border-color: transparent;
+    transition: border 0.4s ease; }
+
+    #flat-slider.ui-slider.ui-slider-horizontal .ui-slider-handle {
+      -webkit-transform: rotateZ(45deg);
+              transform: rotateZ(45deg);
+      top: -25px;
+      background:red;
+      margin-left: -10px; }
+
+    #flat-slider.ui-slider .ui-slider-handle.ui-state-hover,
+    #flat-slider.ui-slider .ui-slider-handle.ui-state-focus,
+    #flat-slider.ui-slider .ui-slider-handle.ui-state-active {
+      border-color: #172f38;
+    background:green; }
+
+  #flat-slider.ui-slider .ui-slider-pip .ui-slider-line {
+    background: blue;
+    transition: all 0.4s ease; }
+
+  #flat-slider.ui-slider.ui-slider-horizontal {
+    height: 6px; }
+
+
+
+      #flat-slider.ui-slider .ui-slider-pip .ui-slider-label {
+          color:yellow;
+          padding-top: 20px;
+          margin-bottom:30px;}
+
+    #flat-slider.ui-slider.ui-slider-horizontal .ui-slider-pip {
+      top: 10px; }
+
+      #flat-slider.ui-slider.ui-slider-horizontal .ui-slider-pip .ui-slider-line {
+        width: 2px;
+        height: 6px;
+        margin-left: -1px; }
+
+      #flat-slider.ui-slider.ui-slider-horizontal .ui-slider-pip[class*=ui-slider-pip-selected] .ui-slider-line {
+        height: 20px; }
+
+      #flat-slider.ui-slider.ui-slider-horizontal .ui-slider-pip.ui-slider-pip-inrange .ui-slider-line {
+        height: 12px; }
+
+
+
+#flat-slider .ui-slider-range,
+#flat-slider .ui-slider-pip[class*=ui-slider-pip-selected] .ui-slider-line,
+#flat-slider .ui-slider-pip.ui-slider-pip-inrange .ui-slider-line {
+  background-color: #25daa5; }
