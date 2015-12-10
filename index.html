@@ -3,15 +3,22 @@
 <head>
 	<title>Reel Findr</title>
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="slider" href="css/slider.css">
+
 	<link rel="icon" type="image/png" href="img/favicon.png">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
 	<script src='js/script.js'></script>
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src='jquery/jquery.js'></script>
+
+
 </head>
 <body>
 	<div class="container">
 		<div class="top">
-			<header><h1>REEL-FINDR</h1></header>
+			<header><h1>REEL<span>FINDR<span></h1></header>
 		</div>
 
 		<div ></div>
@@ -28,8 +35,8 @@
 
 						<h2>Let us help you!</h2>
 
-						<!-- submit button -->
-						<div class="submitbutton"><button type="button" class="button" onClick="nextQuestion()">Submit</button></div>
+						<!-- start button -->
+						<div class="submitbutton"><button type="button" class="button" onClick="nextQuestion()">Start</button></div>
 					</section>
 				</div>
 
@@ -37,10 +44,18 @@
 				<div class="question" id="page1">
 					<h2>What genre are you interested in?</h2>
 					<div class="answer">
+						<div class=button-area>
 						<input type="text" name="genre" value="default" id="genre"><br>
 						<input type="button" onClick="chooseAnswer(this)" id="romance" value="romance">
 						<input type="button" onClick="chooseAnswer(this)" id="comedy" value="comedy">
 						<input type="button" onClick="chooseAnswer(this)" id="thriller" value="thriller">
+						<input type="button" onClick="chooseAnswer(this)" id="action" value="action">
+						<input type="button" onClick="chooseAnswer(this)" id="history" value="history">
+						<input type="button" onClick="chooseAnswer(this)" id="sports" value="sports">
+						<input type="button" onClick="chooseAnswer(this)" id="sci-fi" value="sci-fi">
+						<input type="button" onClick="chooseAnswer(this)" id="animation" value="animation">
+						<input type="button" onClick="chooseAnswer(this)" id="crime" value="crime">
+					</div>
 					</div>
 				</div>
 
@@ -48,10 +63,13 @@
 				<div class="question" id="page2">
 					<h2>What decade is your movie from?</h2>
 					<div class="answer">
-						<input type="text" name="decade" value="default" id="decade"><br>
+
+						<div id="flat-slider"></div>
+
+						<!-- <input type="text" name="decade" value="default" id="decade"><br>
 						<input type="button" onClick="chooseAnswer(this)" id="1990's" value="1990's">
 						<input type="button" onClick="chooseAnswer(this)" id="2000's" value="2000's">
-						<input type="button" onClick="chooseAnswer(this)" id="2010's" value="2010's">
+						<input type="button" onClick="chooseAnswer(this)" id="2010's" value="2010's"> -->
 					</div>
 				</div>
 
@@ -60,14 +78,24 @@
 					<h2>Do you love special effects?</h2>
 					<div class="answer">
 						<input type="text" name="sfx" value="default" id="sfx"><br>
-						<input type="button" onClick="chooseAnswer(this)" id="No" value="No">
-						<input type="button" onClick="chooseAnswer(this)" id="Yes" value="Yes">
+						<input type="button" onClick="chooseAnswer(this)" id="SNo" value="No">
+						<input type="button" onClick="chooseAnswer(this)" id="SYes" value="Yes">
 					</div>
 				</div>
 
+				<!-- storyline -->
 				<div class="question" id="page4">
+					<h2>Do you like complex plots?</h2>
 					<div class="answer">
-						<input type="submit" name="submit">
+						<input type="text" name="plot" value="default" id="plot"><br>
+						<input type="button" onClick="chooseAnswer(this)" id="PNo" value="No">
+						<input type="button" onClick="chooseAnswer(this)" id="PYes" value="Yes">
+					</div>
+				</div>
+
+				<div class="question" id="page5">
+					<div class="answer">
+						<input type="submit" name="submit" id="end">
 					</div>
 				</div>
 			</div>
