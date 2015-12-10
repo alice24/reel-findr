@@ -7,6 +7,7 @@ var reverseCounter = 10;
 
 var container;
 var client;
+//height of div thats being called (page1/page2 etc)
 var clientHeight;
 
 var selection;
