@@ -6,11 +6,13 @@
 
 	<link rel="icon" type="image/png" href="img/favicon.png">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
-	<script src='js/script.js'></script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src='jquery/jquery.js'></script>
+
+	<!-- these two give the slider its form-->
+	<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jqueryui.min.css'>
+	<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jquery-ui-slider-pips.min.css'>
 
 
 </head>
@@ -21,7 +23,7 @@
 		</div>
 
 		<div ></div>
-		
+
 		<div class="content">
 			<form action="results.php" id="quiz" method="get">
 			<div class="overflow" id="overflow">
@@ -63,10 +65,16 @@
 					<h2>What decade is your movie from?</h2>
 					<div class="answer">
 
-						<!-- <input type="text" name="decade" value="default" id="decade"><br>
-						<input type="button" onClick="chooseAnswer(this)" id="1990's" value="1990's">
-						<input type="button" onClick="chooseAnswer(this)" id="2000's" value="2000's">
-						<input type="button" onClick="chooseAnswer(this)" id="2010's" value="2010's"> -->
+						<div id="chosenYears">1985 - 2015</div>
+						<br/><br/>
+						<div id="flat-slider"></div>
+						<input type="text" name="minYear" value="1985" id="minYear"><br>
+						<input type="text" name="maxYear" value="2015" id="maxYear"><br>
+						<div class=answer>
+							<div class=button-area>
+								<input type="button" onClick="nextQuestion()" id="year" value="CONFIRM">
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -108,5 +116,12 @@
 			</footer>
 		</div>
 	</div>
+
+	<script src='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/js/jquery-plus-ui.min.js'></script>
+
+	<!-- this makes the ticks under the slider show up-->
+	<script src='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/js/jquery-ui-slider-pips.js'></script>
+	<script src='js/script.js'></script>
+
 </body>
 </html>

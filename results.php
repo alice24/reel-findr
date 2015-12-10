@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="icon" type="image/png" href="img/favicon.png">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
-	<script src='js/script.js'></script>	
+	<script src='js/script.js'></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -21,17 +21,21 @@
 					echo "Genre: <b>" . $_GET['genre'] . "</b>";
 					echo "</h2>";
 
-					echo "<h2>";			
-					echo "Decade: <b>" . $_GET['decade'] . "</b>";
+					echo "<h2>";
+					echo "Year: <b>" . $_GET['minYear'] . "</b> - <b>" . $_GET['maxYear'] . "</b>";
 					echo "</h2>";
-					
-					echo "<h2>";			
+
+					echo "<h2>";
 					echo "SFX: <b>" . $_GET['sfx'] . "</b>";
+					echo "</h2>";
+
+					echo "<h2>";
+					echo "SFX: <b>" . $_GET['plot'] . "</b>";
 					echo "</h2>";
 				?>
 			</section>
 		</div>
-		
+
 		<div class="footer">
 			<footer>
 				<p class="foot">
