@@ -1,20 +1,19 @@
 var pages = ["page0","page1","page2","page3","page4", "page5"];
 
-var forms = ["","genre","decade","sfx"];
+var forms = ["","genre","decade","sfx","plot"];
 
 var counter = 0;
-var reverseCounter = 3;
+var reverseCounter = 10;
 
 var container;
 var client;
+//height of div thats being called (page1/page2 etc)
 var clientHeight;
 
 var selection;
 
 window.onload = function() {
-	if (document.getElementById('overflow')){
 		adjustHeight();
-	}
 };
 
 function chooseAnswer(){
@@ -26,7 +25,7 @@ function chooseAnswer(){
 
 function nextQuestion(){
 	document.getElementById(pages[counter]).style.order = reverseCounter;
-	reverseCounter --;
+	reverseCounter ++;
 	console.log("next question!");
 	counter++;
 
