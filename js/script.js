@@ -16,6 +16,10 @@ window.onload = function() {
 	adjustHeight();
 };
 
+$(window).resize(function() {
+	adjustHeight();
+});
+
 function chooseAnswer(){
 	selection = event.currentTarget.value;
 
