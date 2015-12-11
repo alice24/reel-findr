@@ -3,28 +3,109 @@
 <head>
 	<title>Reel Findr</title>
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="icon" type="image/png" href="img/favicon.png">
 
-	<script src='js/script.js'></script>	
+	<link rel="icon" type="image/png" href="img/favicon.png">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<!-- these two give the slider its form-->
+	<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jqueryui.min.css'>
+	<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jquery-ui-slider-pips.min.css'>
+
+
 </head>
 <body>
 	<div class="container">
 		<div class="top">
-			<header><h1>REEL-FINDR</h1></header>
+			<header><h1>REEL<span>FINDR<span></h1></header>
 		</div>
 
+		<div ></div>
+
 		<div class="content">
-			<!-- splash page -->
-			<section>
-				<h2>Need something for movie night?</h2>
-				
-				<h2>Let us help you!</h2>
-				
-				<p><a href="quiz.html"><img src="img/start.gif" style="width:50%;"></a></p>
-			</section>
+			<form action="results.php" id="quiz" method="get">
+			<div class="overflow" id="overflow">
+
+				<!-- landing page -->
+
+				<div id="page0">
+					<section>
+						<h2>Need something for movie night?</h2>
+
+						<h2>Let us help you!</h2>
+
+						<!-- start button -->
+						<div class="submitbutton"><button type="button" class="button" onClick="nextQuestion()">Start</button></div>
+					</section>
+				</div>
+
+				<!-- genre page -->
+				<div class="question" id="page1">
+					<h2>What genre are you interested in?</h2>
+					<div class="answer">
+						<div class=button-area>
+						<input type="text" name="genre" value="default" id="genre"><br>
+						<input type="button" onClick="chooseAnswer(this)" id="romance" value="romance">
+						<input type="button" onClick="chooseAnswer(this)" id="comedy" value="comedy">
+						<input type="button" onClick="chooseAnswer(this)" id="thriller" value="thriller">
+						<input type="button" onClick="chooseAnswer(this)" id="action" value="action">
+						<input type="button" onClick="chooseAnswer(this)" id="history" value="history">
+						<input type="button" onClick="chooseAnswer(this)" id="sports" value="sports">
+						<input type="button" onClick="chooseAnswer(this)" id="sci-fi" value="sci-fi">
+						<input type="button" onClick="chooseAnswer(this)" id="animation" value="animation">
+						<input type="button" onClick="chooseAnswer(this)" id="crime" value="crime">
+					</div>
+					</div>
+				</div>
+
+				<!-- decade page -->
+				<div class="question" id="page2">
+					<h2>What decade is your movie from?</h2>
+					<div class="answer">
+
+						<div id="chosenYears">1985 - 2015</div>
+						<br/><br/>
+						<div id="flat-slider"></div>
+						<input type="text" name="minYear" value="1985" id="minYear"><br>
+						<input type="text" name="maxYear" value="2015" id="maxYear"><br>
+						<div class=answer>
+							<div class=button-area>
+								<input type="button" onClick="nextQuestion()" id="year" value="CONFIRM">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- special effects page -->
+				<div class="question" id="page3">
+					<h2>Do you love special effects?</h2>
+					<div class="answer">
+						<input type="text" name="sfx" value="default" id="sfx"><br>
+						<input type="button" onClick="chooseAnswer(this)" id="SNo" value="No">
+						<input type="button" onClick="chooseAnswer(this)" id="SYes" value="Yes">
+					</div>
+				</div>
+
+				<!-- storyline -->
+				<div class="question" id="page4">
+					<h2>Do you like complex plots?</h2>
+					<div class="answer">
+						<input type="text" name="plot" value="default" id="plot"><br>
+						<input type="button" onClick="chooseAnswer(this)" id="PNo" value="No">
+						<input type="button" onClick="chooseAnswer(this)" id="PYes" value="Yes">
+					</div>
+				</div>
+
+				<div class="question" id="page5">
+					<div class="answer">
+						<input type="submit" name="submit" id="end">
+					</div>
+				</div>
+			</div>
+			</form>
 		</div>
-		
 		<div class="footer">
 			<footer>
 				<p class="foot">
@@ -35,5 +116,12 @@
 			</footer>
 		</div>
 	</div>
+
+	<script src='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/js/jquery-plus-ui.min.js'></script>
+
+	<!-- this makes the ticks under the slider show up-->
+	<script src='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/js/jquery-ui-slider-pips.js'></script>
+	<script src='js/script.js'></script>
+
 </body>
 </html>
