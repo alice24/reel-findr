@@ -34,7 +34,7 @@ span{
 	-webkit-flex-direction: column;
 }
 
-#genre, #decade, #sfx, #plot, #minYear, #maxYear{
+#genre, #decade, #sfx, #plot, #minYear,#maxYear{
 	display:none;
 }
 
