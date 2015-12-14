@@ -1,0 +1,106 @@
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   Declare colors, fonts
+   ========================================================= */
+/* body */
+/* grid */
+/* modals */
+body {
+  background-color: #373633;
+  font-family: "Lato", Calibri, Arial, sans-serif;
+  color: #ffffff;
+  text-align: center;
+}
+
+/**********************************
+ *           GRID STUFF           *
+ **********************************/
+.scroller {
+  background: none;
+  border: none;
+  text-align: center;
+  width: 100%;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.scroller:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.scroller .items {
+  height: 100%;
+  width: 100%;
+  background-color: green;
+  position: absolute;
+}
+
+.scroller .item {
+  background-color: #ff0000;
+  margin-left: 10px;
+  float: left;
+  width: 125px;
+  height: 175px;
+  margin-top: 12.5px;
+}
+
+.scroller .scroll {
+  background-color: rgba(0, 0, 0, 0.5);
+  /* opacity: 0.4; */
+  height: 100%;
+  width: 100px;
+  position: absolute;
+  z-index: 1000;
+  visibility: hidden;
+  font-size: 50px;
+  padding-top: 70px;
+  color: white;
+}
+
+.scroller .scroll.right {
+  right: 0px;
+}
+
+.scroller:hover .scroll {
+  visibility: visible;
+}
+
+/*
+.scroll.left:hover ~ .items {
+  -webkit-animation: left_scroll linear 5s;
+  -webkit-animation-fill-mode:forwards;
+}
+.scroll.left:hover ~ .items .item {
+}
+
+.scroll.right:hover ~ .items {
+  -webkit-animation: right_scroll linear 5s;
+  -webkit-animation-fill-mode:forwards;
+}
+.scroll.right:hover ~ .items .item {
+}
+*/
+@-webkit-keyframes left_scroll {
+  0% {
+    left: 0px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+@-webkit-keyframes right_scroll {
+  0% {
+    right: 0px;
+  }
+  100% {
+    right: 100%;
+  }
+}
