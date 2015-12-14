@@ -1,8 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PHP Quiz</title>
+<link rel='stylesheet' href='css/movies.css' />
+</head>
+
+<body>
+	<div class="top">
+		<header><h1>REEL<span>FINDR<span></h1></header>
+	</div>
+
 <?php
 ini_set( 'display_errors', 1 );
 ini_set( 'display_errors', 1 );
 ini_set( 'display_startup_errors', 1 );
-echo 'Hello PDO!!!!<br/><br/>';
+// echo 'Hello PDO!!!!<br/><br/>';
 
 $db = new PDO('mysql:host=localhost;dbname=reelfindr;charset=utf8','root','root');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -19,18 +31,12 @@ if( isset($_GET) && isset($_GET['minYear']) && isset($_GET['maxYear']))  {
 
 $sql = "SELECT * FROM movies WHERE TRUE ";
 if( isset($_GET) && isset($_GET['genre']) && isset($_GET['sfx']) && isset($_GET['plot']) ) {
-	$sql .= "AND genre =:gnre AND spFx=:spFx AND thoghtPr=:plt AND year BETWEEN :minyr AND :maxyr ORDER BY year ASC" ;
+	$sql .= "AND genre =:gnre
+					AND spFx=:spFx
+					AND thoghtPr=:plt
+					AND year BETWEEN :minyr
+					AND :maxyr ORDER BY year ASC" ;
 }
-
-//
-// if( isset($_GET) && isset($_GET['genre']) && isset($_GET['minYear']) isset($_GET['maxYear']) ) {
-// 	$sql .= "AND genre =:gnre "; //I want to say year is inbetween minYear and maxYear here..don't know the correct syntax with using the bound parametes.
-// 	// $sql .= "AND year=:year";
-// }
-// if( isset($_GET) && isset($_GET['genre']) && isset($_GET['Year']) && isset($_GET['sfx']) ) {
-
-
-//$sql .= "AND genre=:gnre AND yr=:Year AND sfx=:sfx ORDER BY Year";
 
 
 //dump out connection info
@@ -69,5 +75,8 @@ foreach( $result as $item ) {
 
 
 echo "<br/><br/>";
-echo 'Hello PDO3!<br/><br/>';
+// echo 'Hello PDO3!<br/><br/>';
 ?>
+
+</body>
+</html>
