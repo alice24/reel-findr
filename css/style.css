@@ -82,7 +82,7 @@ span{
   color: white;
 }
 
-#romance, #comedy, #thriller, #action, #history, #sports, #animation, #sci-fi, #crime, #year{
+#romance, #comedy, #thriller, #action, #history, #sports, #drama, #sci-fi, #crime, #year{
 	background-color: white;
   font-size: 1.6em;
   text-transform: uppercase;
@@ -100,7 +100,7 @@ span{
 
 }
 
-#romance:hover, #comedy:hover, #thriller:hover, #action:hover, #history:hover, #sports:hover, #animation:hover, #sci-fi:hover, #crime:hover, #year:hover{
+#romance:hover, #comedy:hover, #thriller:hover, #action:hover, #history:hover, #sports:hover, #drama:hover, #sci-fi:hover, #crime:hover, #year:hover{
 	transform: scale(1.1);
 	background-color: black;
 	color: white;
