@@ -16,9 +16,9 @@ html, body{
 	font-weight: 300;
 	position: relative;
 	margin:0 auto;
-    z-index: 5;
-		-webkit-align-items:center;
-		text-align:center;
+  z-index: 5;
+	-webkit-align-items:center;
+	text-align:center;
 }
 
 span{
