@@ -17,6 +17,18 @@ h1{
 	margin:15px 15px 0px 15px;
 }
 
+.intro h2{
+	letter-spacing: 2px;
+	    text-transform: uppercase;
+	    padding: 0 20px 10px;
+		}
+
+.bold{
+font-weight: 700;
+font-size: 1.2em;
+
+}
+
 a {
     text-decoration: none;
 }
@@ -36,6 +48,11 @@ span{
 
 #genre, #decade, #sfx, #plot, #minYear,#maxYear{
 	display:none;
+}
+
+.question h2{
+	text-transform: uppercase;
+	letter-spacing: 2px;
 }
 
 .top{
@@ -88,7 +105,7 @@ span{
   text-transform: uppercase;
   padding: 14px;
   border: 3px solid #000;
-  margin: 30px 5px;
+  margin: 8px 5px;
   display: block;
   cursor: pointer;
   text-align: center;
@@ -169,14 +186,6 @@ How to select specific
 
 
 
-
-
-
-
-
-
-
-
 /*changes colour of slider (not active)*/
 [id*=flat-slider].ui-slider,
 [id*=flat-slider].ui-slider .ui-slider-pip .ui-slider-line {
@@ -211,7 +220,7 @@ body {
 }
 
 #flat-slider.ui-slider {
-  background: tomato;
+  background: black;
   border: none;
   border-radius: 0; }
 
@@ -226,17 +235,17 @@ body {
       -webkit-transform: rotateZ(45deg);
               transform: rotateZ(45deg);
       top: -25px;
-      background:red;
+      background:black;
       margin-left: -10px; }
 
     #flat-slider.ui-slider .ui-slider-handle.ui-state-hover,
     #flat-slider.ui-slider .ui-slider-handle.ui-state-focus,
     #flat-slider.ui-slider .ui-slider-handle.ui-state-active {
       border-color: #172f38;
-    background:green; }
+    background:black; }
 
   #flat-slider.ui-slider .ui-slider-pip .ui-slider-line {
-    background: blue;
+    background: #FFDD00;
     transition: all 0.4s ease; }
 
   #flat-slider.ui-slider.ui-slider-horizontal {
@@ -245,7 +254,7 @@ body {
 
 
       #flat-slider.ui-slider .ui-slider-pip .ui-slider-label {
-          color:yellow;
+          color:black;
           padding-top: 20px;
           margin-bottom:30px;}
 
@@ -268,4 +277,9 @@ body {
 #flat-slider .ui-slider-range,
 #flat-slider .ui-slider-pip[class*=ui-slider-pip-selected] .ui-slider-line,
 #flat-slider .ui-slider-pip.ui-slider-pip-inrange .ui-slider-line {
-  background-color: #25daa5; }
+  background-color: #CCC; }
+
+/*next button*/
+#year{
+	font-size: 2em;
+}
