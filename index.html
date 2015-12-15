@@ -19,10 +19,8 @@
 <body>
 	<div class="container">
 		<div class="top">
-			<header><h1>REEL<span>FINDRR<span></h1></header>
+			<header><h1>REEL<span>FINDR<span></h1></header>
 		</div>
-
-		<div ></div>
 
 		<div class="content">
 			<form action="movies_scroll.php" id="quiz" method="get">
@@ -45,17 +43,17 @@
 				<div class="question" id="page1">
 					<h2>What genre are you interested in?</h2>
 					<div class="answer">
-						<div class=button-area>
 						<input type="text" name="genre" value="default" id="genre"><br>
-						<input type="button" onClick="chooseAnswer(this)" id="romance" value="romance">
-						<input type="button" onClick="chooseAnswer(this)" id="comedy" value="comedy">
-						<input type="button" onClick="chooseAnswer(this)" id="thriller" value="thriller">
-						<input type="button" onClick="chooseAnswer(this)" id="action" value="action">
-						<input type="button" onClick="chooseAnswer(this)" id="history" value="history">
-						<input type="button" onClick="chooseAnswer(this)" id="sports" value="sports">
-						<input type="button" onClick="chooseAnswer(this)" id="sci-fi" value="sci-fi">
-						<input type="button" onClick="chooseAnswer(this)" id="drama" value="drama">
-						<input type="button" onClick="chooseAnswer(this)" id="crime" value="crime">
+						<div class=button-area>
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="action" value="action">
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="adventure" value="adventure">
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="animation" value="animation">
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="comedy" value="comedy">
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="crime" value="crime">
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="drama" value="drama">
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="history" value="history">
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="romance" value="romance">
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="sci-fi" value="sci-fi">
 					</div>
 					</div>
 				</div>
@@ -71,9 +69,7 @@
 						<input type="text" name="minYear" value="1985" id="minYear"><br>
 						<input type="text" name="maxYear" value="2015" id="maxYear"><br>
 						<div class=answer>
-							<div class=button-area>
-								<input type="button" onClick="nextQuestion()" id="year" value="NEXT">
-							</div>
+							<input type="button" onClick="nextQuestion()" class="button" id="year" value="NEXT">
 						</div>
 					</div>
 				</div>
@@ -83,8 +79,10 @@
 					<h2>Do you love special effects?</h2>
 					<div class="answer">
 						<input type="text" name="sfx" value="default" id="sfx"><br>
-						<input type="button" onClick="chooseAnswer(this)" id="SNo" value="n">
-						<input type="button" onClick="chooseAnswer(this)" id="SYes" value="y">
+						<div class=yn-button-area>
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SNo" value="no">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SYes" value="yes">
+						</div>
 					</div>
 				</div>
 
@@ -93,8 +91,10 @@
 					<h2>Do you like complex plots?</h2>
 					<div class="answer">
 						<input type="text" name="plot" value="default" id="plot"><br>
-						<input type="button" onClick="chooseAnswer(this)" id="PNo" value="n">
-						<input type="button" onClick="chooseAnswer(this)" id="PYes" value="y">
+					<div class=yn-button-area>
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="PNo" value="no">
+						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="PYes" value="yes">
+					</div>
 					</div>
 				</div>
 
