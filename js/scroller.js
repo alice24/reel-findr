@@ -1,7 +1,7 @@
 window.onload= function() {
   console.log("inside");
 
-    var body = document.querySelector( 'body' );
+    var body = document.querySelector( '.results' );
 
       var all=document.querySelectorAll('.item');
 
@@ -41,6 +41,10 @@ window.onload= function() {
                   // console.log("clicking");
                     //delete previous child
                   }
+
+
+
+
 
     }
 

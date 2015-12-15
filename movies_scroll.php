@@ -24,6 +24,7 @@
 				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
+
 				if( isset($_GET) && isset($_GET['minYear']) && isset($_GET['maxYear']))  {
 																 $miny = $_GET['minYear'];
 																 $maxy = $_GET['maxYear'];
@@ -41,29 +42,32 @@
 				// 				AND year BETWEEN :minyr
 				// 				AND :maxyr ORDER BY year ASC" ;
 				// }
+
+
+				//dump out connection info
+				// var_dump( $db );
+
+				$stmt = $db->prepare( $sql );
+				$stmt->bindParam( ':gnre', $_GET['genre'] );
+				$stmt->bindParam( ':spFx', $_GET['sfx'] );
+				$stmt->bindParam( ':minyr', $_GET['minYear'] );
+				$stmt->bindParam( ':maxyr', $_GET['maxYear'] );
+				$stmt->bindParam( ':plt', $_GET['plot'] );
  //$$ $_GET['genre']!='all';
-$var=1;
 //dump out connection info
 // var_dump( $db );
-echo "<br/>";
 
-$stmt = $db->prepare( $sql );
-$stmt->bindParam( ':gnre', $_GET['genre'] );
-$stmt->bindParam( ':spFx', $_GET['sfx'] );
-$stmt->bindParam( ':minyr', $_GET['minYear'] );
-$stmt->bindParam( ':maxyr', $_GET['maxYear'] );
-$stmt->bindParam( ':plt', $_GET['plot'] );
-​
-​
-// $stmt->bindParam( ':sfx', $_GET['spFx'] );
-​
-// $stmt->debugDumpParams();
-$stmt->execute();
-$result = $stmt->fetchAll( PDO::FETCH_OBJ );
-// 	return $result->fetchAll( PDO::FETCH_ASSOC );
-// }
-​
-// var_dump($result);
+
+
+				// $stmt->bindParam( ':sfx', $_GET['spFx'] );
+
+				// $stmt->debugDumpParams();
+				$stmt->execute();
+				$result = $stmt->fetchAll( PDO::FETCH_OBJ );
+				// 	return $result->fetchAll( PDO::FETCH_ASSOC );
+				// }
+
+				// var_dump($result);
 				?>
 			<div class='content'>
 				<div class='results'>
@@ -76,25 +80,28 @@ $result = $stmt->fetchAll( PDO::FETCH_OBJ );
 									echo	"<i class='fa fa-chevron-circle-left'></i>";
 									echo	"</div>";
 							echo	"<div class='items'>";
-								foreach( $result as $item ) {
-												echo	"<div class='item'";
-												echo " data-title ='".$item->title."'";
-												echo " data-year ='".$item->year."'";
-												echo " data-genre ='".$item->genre."'";
-												echo ">";
-												echo $item->genre. "  " ;
-												echo $item->title. "  " ;
-												echo $item->year. "  " ;
-												echo $item->spFx. "  " ;
-												echo $item->thoghtPr. "  " ;
-												echo $item->imageUrl. "  ";
-												echo "</div>";
-		​
-										}
+							foreach( $result as $item ) {
+								echo	"<div class='item'";
+								echo " data-title ='".$item->title."'";
+								echo " data-year ='".$item->year."'";
+								echo " data-genre ='".$item->genre."'";
+								echo ">";
+								echo $item->genre. "  " ;
+								echo $item->title. "  " ;
+								echo $item->year. "  " ;
+								echo $item->spFx. "  " ;
+								echo $item->thoghtPr. "  " ;
+								echo $item->imageUrl. "  ";
+								echo "</div>";
+							}
 												echo "</div>";
 					echo "</div>";
 				// echo "<label for='chk".$item->mid."'>".$item->name."</label>";
 				?>
+
+				<script src='js/scroller.js'></script>
+			</div>
+
 			</div>
 		<div class="footer">
 			<footer>
