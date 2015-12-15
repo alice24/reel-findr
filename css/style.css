@@ -9,6 +9,11 @@ html, body{
 	font-size: 12px;
 }
 
+/*.dialog{
+  margin:500px auto;
+  color:green;
+}*/
+
 h1{
 	font-size:4em;
 	font-weight: 300;
@@ -27,7 +32,7 @@ span{
 
 .container{
 	position:absolute;
-	background:gray;
+	/*background:gray;*/
 	width:100%;
 	height:100%;
 	display: -webkit-flex;
@@ -197,9 +202,9 @@ How to select specific
   margin: auto;
 }
 
-body {
+/*body {
   background: #555555;
-}
+}*/
 
 #chosenYears{
   font-size:3em;

@@ -2,6 +2,17 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  font-family: 'Open Sans';
+	font-weight: 400;
+}
+
+.dialog{
+  margin:600px auto;
+  min-height: 100px;
+  min-width: 100px;
+  font-size: 2rem;
+  /*background:yellow;*/
+
 }
 
 /* =========================================================
@@ -11,7 +22,7 @@
 /* grid */
 /* modals */
 body {
-  background-color: #373633;
+  /*background-color: #373633;*/
   font-family: "Lato", Calibri, Arial, sans-serif;
   color: #ffffff;
   text-align: center;
@@ -52,6 +63,8 @@ body {
   margin-top: 12.5px;
 }
 
+
+
 .scroller .scroll {
   background-color: rgba(0, 0, 0, 0.5);
   /* opacity: 0.4; */
@@ -79,6 +92,7 @@ body {
 
 .dialog{
   margin:0 auto;
+  color:black;
 }
 /*
 .scroll.left:hover ~ .items {
