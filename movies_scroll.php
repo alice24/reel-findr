@@ -24,7 +24,6 @@
 				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-<<<<<<< HEAD
 				if( isset($_GET) && isset($_GET['minYear']) && isset($_GET['maxYear']))  {
 																 $miny = $_GET['minYear'];
 																 $maxy = $_GET['maxYear'];
