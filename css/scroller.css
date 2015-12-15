@@ -27,7 +27,7 @@ body {
   width: 100%;
   height: 200px;
   position: relative;
-  overflow: hidden;
+  overflow:hidden;
 }
 
 .scroller:after {
@@ -38,8 +38,8 @@ body {
 
 .scroller .items {
   height: 100%;
-  width: 100%;
-  background-color: green;
+  width: 2000%;
+  /*background-color: green;*/
   position: absolute;
 }
 
@@ -58,7 +58,7 @@ body {
   height: 100%;
   width: 100px;
   position: absolute;
-  z-index: 1000;
+  z-index: 2000;
   visibility: hidden;
   font-size: 50px;
   padding-top: 70px;
@@ -73,6 +73,13 @@ body {
   visibility: visible;
 }
 
+.item:hover{
+  transform: scale(1.1);
+}
+
+.dialog{
+  margin:0 auto;
+}
 /*
 .scroll.left:hover ~ .items {
   -webkit-animation: left_scroll linear 5s;
@@ -86,8 +93,8 @@ body {
   -webkit-animation-fill-mode:forwards;
 }
 .scroll.right:hover ~ .items .item {
-}
-*/
+}*/
+
 @-webkit-keyframes left_scroll {
   0% {
     left: 0px;

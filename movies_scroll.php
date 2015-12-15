@@ -78,6 +78,7 @@ echo "<div class='container'>";
 										echo $item->year. "  " ;
 										echo $item->spFx. "  " ;
 										echo $item->thoghtPr. "  " ;
+										// echo $item->imageUrl. "  ";
 										echo "</div>";
 								}
 								echo "</div>";
