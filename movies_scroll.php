@@ -86,12 +86,12 @@
 								echo " data-year ='".$item->year."'";
 								echo " data-genre ='".$item->genre."'";
 								echo ">";
-								echo $item->genre. "  " ;
-								echo $item->title. "  " ;
-								echo $item->year. "  " ;
-								echo $item->spFx. "  " ;
-								echo $item->thoghtPr. "  " ;
-								echo $item->imageUrl. "  ";
+							//	echo $item->genre. "  " ;
+							//	echo $item->title. "  " ;
+							//	echo $item->year. "  " ;
+							//	echo $item->spFx. "  " ;
+						//		echo $item->thoghtPr. "  " ;
+								echo "<img src=".$item->imageUrl. ">";
 								echo "</div>";
 							}
 												echo "</div>";
