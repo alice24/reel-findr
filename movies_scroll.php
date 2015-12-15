@@ -18,7 +18,7 @@ ini_set( 'display_errors', 1 );
 ini_set( 'display_startup_errors', 1 );
 // echo 'Hello PDO!!!!<br/><br/>';
 
-$db = new PDO('mysql:host=localhost;dbname=reelfindr;charset=utf8','root','root');
+$db = new PDO('mysql:host=localhost;dbname=reelfindr1;charset=utf8','root','root');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
@@ -40,7 +40,8 @@ $sql = "SELECT * FROM movies WHERE TRUE ";
 // 				AND :maxyr ORDER BY year ASC" ;
 // }
 
-
+ //$$ $_GET['genre']!='all';
+$var=1;
 //dump out connection info
 // var_dump( $db );
 echo "<br/>";
@@ -63,6 +64,7 @@ $result = $stmt->fetchAll( PDO::FETCH_OBJ );
 
 // var_dump($result);
 echo "<div class='container'>";
+
 	echo "<div class='scroller'>";
 				echo	"<div class='scroll right'>";
 				echo	"<i class='fa fa-chevron-circle-right'></i>";
@@ -72,14 +74,19 @@ echo "<div class='container'>";
 					echo	"</div>";
 			echo	"<div class='items'>";
 						foreach( $result as $item ) {
-										echo	"<div class='item'>";
+										echo	"<div class='item'";
+										echo " data-title ='".$item->title."'";
+										echo " data-year ='".$item->year."'";
+										echo " data-genre ='".$item->genre."'";
+										echo ">";
 										echo $item->genre. "  " ;
 										echo $item->title. "  " ;
 										echo $item->year. "  " ;
 										echo $item->spFx. "  " ;
 										echo $item->thoghtPr. "  " ;
-										// echo $item->imageUrl. "  ";
+										echo $item->imageUrl. "  ";
 										echo "</div>";
+
 								}
 								echo "</div>";
 	echo "</div>";
