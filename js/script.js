@@ -14,7 +14,7 @@ var selection;
 
 window.onload = function() {
 	adjustHeight();
-};
+}
 
 $(window).resize(function() {
 	adjustHeight();
@@ -31,13 +31,8 @@ function chooseAnswer(){
 function nextQuestion(){
 	document.getElementById(pages[counter]).style.order = reverseCounter;
 	reverseCounter ++;
-	console.log("next question!");
 	counter++;
-
-	console.log(pages[counter]);
-
 	document.getElementById(pages[counter]).style.order = "-1";
-
 	adjustHeight();
 }
 
