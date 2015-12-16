@@ -58,7 +58,7 @@ span{
 	-webkit-flex-direction: column;
 }
 
-#genre, #decade, #sfx, #plot, #minYear,#maxYear{
+#genre, #decade, #sfx, #pg, #minYear,#maxYear{
 	display:none;
 }
 
@@ -88,6 +88,7 @@ span{
 
 .results{
 	width:100%;
+	-webkit-transition: all 1s linear;
 }
 
 .items{
@@ -345,8 +346,8 @@ span{
   background-color: #FFDD00;
   margin-left: 10px;
   float: left;
-  width: 125px;
-  height: 175px;
+  width: 150px;
+  height: 221px;
 	-webkit-transition: width 1s, height 1s;
 }
 
@@ -380,11 +381,34 @@ span{
 	padding-right:10px;
 }
 
+.title{
+	padding-top:50px;
+	letter-spacing: 4px;
+	text-transform: uppercase;
+  margin:0 auto;
+  font-size: 3.5rem;
+	font-weight:600;
+ }
+
+ .dir{
+ 	letter-spacing: 4px;
+ 	text-transform: uppercase;
+   margin:0 auto;
+	 	width:700px;
+   font-size: 2.5rem;
+ 	font-weight:400;
+	padding:10px 0px 30px 0px;
+  }
+
 .dialog{
   margin:0 auto;
-  min-height: 100px;
-  min-width: 100px;
+	text-align:left;
   font-size: 2rem;
+	width:700px;
+	letter-spacing: 1px;
+	line-height: 40px;
+	text-transform: uppercase;
+
   /*background:yellow;*/
 
  }

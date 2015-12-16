@@ -6,7 +6,7 @@ window.addEventListener('load',function(){
   //var test = document.getElementsByClassName("items");
 
   fixWindow();
-
+document.getElementById("items").style.left = minWidth;
 //  for ( var i = 0; i< cols.length; i++){
   //  console.log(cols[i]);
     //cols[i].addEventListener('click',showInfo);
@@ -24,6 +24,16 @@ window.addEventListener('load',function(){
                 // console.log(x.dataset.year;
 
                 // delete existing dialog
+                var title = document.querySelector('.title');
+                if( title ) {
+                  title.remove();
+                }
+
+                var dir = document.querySelector('.dir');
+                if( dir ) {
+                  dir.remove();
+                }
+
                 var dialog = document.querySelector('.dialog');
                 if( dialog ) {
                   dialog.remove();
@@ -37,25 +47,40 @@ window.addEventListener('load',function(){
                 console.log(target.dataset.year);
                 console.log(target.dataset.genre);
 
+                title = document.createElement('div');
+                title.setAttribute('class', 'title');
 
-                var display = document.createElement('div');
-                display.setAttribute('class', 'dialog');
+                dir = document.createElement('div');
+                dir.setAttribute('class', 'dir');
+
+                dialog = document.createElement('div');
+                dialog.setAttribute('class', 'dialog');
                 var node = document.createTextNode(target.dataset.title);  //add space
-                var node1 = document.createTextNode(target.dataset.year);
-                var node2 = document.createTextNode(target.dataset.genre);
+                var node1 = document.createTextNode(" (" + target.dataset.year + ")");
+                var node2 = document.createTextNode(target.dataset.director);
+                var node3 = document.createTextNode(target.dataset.sum);
 
-                display.appendChild(node);
-                display.appendChild(node1);
-                display.appendChild(node2);
+                title.appendChild(node);
+                title.appendChild(node1);
 
-                body.appendChild(display);
-                console.log(display);
+                dir.appendChild(node2);
+
+                dialog.appendChild(node3);
+
+                body.appendChild(title);
+                body.appendChild(dir);
+                body.appendChild(dialog);
+                console.log(dialog);
                 // console.log("clicking");
                   //delete previous child
                 }
   }
 
 });
+
+function br(){
+  return document.createElement('br');
+}
 
 $(window).resize(function() {
   fixWindow();
@@ -78,13 +103,13 @@ function fixWindow(){
 $('.scroll.left').mouseenter(function() {
   $('.items').animate({
     left: minWidth
-  },2000);
+  },2000, "linear");
 });
 
 $('.scroll.right').mouseenter(function() {
   $('.items').animate({
     left: maxWidth
-  },2000);
+  },2000, "linear");
 });
 
 $('.scroll').mouseleave(function() {
