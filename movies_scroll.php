@@ -16,6 +16,28 @@
 		</div>
 
 			<?php
+				session_start();
+
+				if( isset($_GET) && isset($_GET['genre']) ) {
+						$genre = $_GET['genre'];
+				}
+
+				if( isset($_GET) && isset($_GET['minYear']) ) {
+					$minYear = $_GET['minYear'];
+				}
+
+				if( isset($_GET) && isset($_GET['maxYear']) ) {
+					$maxYear = $_GET['maxYear'];
+				}
+
+				if( isset($_GET) && isset($_GET['sfx']) ) {
+					$sfx = $_GET['sfx'];
+				}
+
+				if( isset($_GET) && isset($_GET['pg']) ) {
+					$pg = $_GET['pg'];
+				}
+
 				ini_set( 'display_errors', 1 );
 				ini_set( 'display_errors', 1 );
 				ini_set( 'display_startup_errors', 1 );
@@ -24,17 +46,24 @@
 				$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-
-				if( isset($_GET) && isset($_GET['minYear']) && isset($_GET['maxYear']))  {
-																 $miny = $_GET['minYear'];
-																 $maxy = $_GET['maxYear'];
-														 }
-				 if( isset($_GET) && isset($_GET['sfx']) )  {
-				  											$spFx = $_GET['sfx'];
-				 										}
 				//capture user input
 
-				$sql = "SELECT * FROM movies WHERE TRUE ";
+				$sql = "SELECT * FROM movies WHERE";
+
+				if ($genre != 'all'){
+					$sql = $sql . " genre LIKE '%$genre%' AND";
+				}
+
+					$sql = $sql . " year BETWEEN $minYear AND $maxYear
+									AND spFx = '$sfx'";
+
+				if ($pg == "yes"){
+					$sql = $sql. " AND pg = '$pg'";
+				}
+
+				$sql = $sql. " ORDER BY title";
+
+
 				// if( isset($_GET) && isset($_GET['genre']) && isset($_GET['sfx']) && isset($_GET['plot']) ) {
 				// $sql .= "AND genre =:gnre
 				// 				AND spFx=:spFx
@@ -48,11 +77,11 @@
 				// var_dump( $db );
 
 				$stmt = $db->prepare( $sql );
-				$stmt->bindParam( ':gnre', $_GET['genre'] );
-				$stmt->bindParam( ':spFx', $_GET['sfx'] );
-				$stmt->bindParam( ':minyr', $_GET['minYear'] );
-				$stmt->bindParam( ':maxyr', $_GET['maxYear'] );
-				$stmt->bindParam( ':plt', $_GET['plot'] );
+				$stmt->bindParam( ':gnre', $genre );
+				$stmt->bindParam( ':spFx', $minYear );
+				$stmt->bindParam( ':minyr', $maxYear );
+				$stmt->bindParam( ':maxyr', $sfx );
+				$stmt->bindParam( ':pg', $pg );
  //$$ $_GET['genre']!='all';
 //dump out connection info
 // var_dump( $db );
@@ -79,26 +108,27 @@
 									echo	"<div class='scroll left'>";
 									echo	"<i class='fa fa-chevron-circle-left'></i>";
 									echo	"</div>";
-							echo	"<div class='items'>";
+							echo	"<div class='items' id='items'>";
 							foreach( $result as $item ) {
 								echo	"<div class='item'";
 								echo " data-title ='".$item->title."'";
 								echo " data-year ='".$item->year."'";
-								echo " data-genre ='".$item->genre."'";
+								echo " data-director ='".$item->director."'";
+								echo ' data-sum ="'.$item->summary.'""';
+								//echo " data-genre ='".$item->genre."'";
 								echo ">";
-								echo $item->genre. "  " ;
-								echo $item->title. "  " ;
-								echo $item->year. "  " ;
-								echo $item->spFx. "  " ;
-								echo $item->thoghtPr. "  " ;
-								echo $item->imageUrl. "  ";
+							//	echo $item->genre. "  " ;
+							//	echo $item->title. "  " ;
+							//	echo $item->year. "  " ;
+							//	echo $item->spFx. "  " ;
+								//echo $item->thoghtPr. "  " ;
+								echo "<img src=".$item->imageUrl. ">";
 								echo "</div>";
 							}
-												echo "</div>";
+						echo "</div>";
 					echo "</div>";
 				// echo "<label for='chk".$item->mid."'>".$item->name."</label>";
 				?>
-
 				<script src='js/scroller.js'></script>
 			</div>
 
