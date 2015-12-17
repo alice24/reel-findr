@@ -1,145 +1,144 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Reel Findr</title>
-	<!-- favicon-->
-	<link rel="icon" type="image/png" href="img/favicon.png">
+	<head>
+		<title>Reel Findr</title>
+		<!-- favicon-->
+		<link rel="icon" type="image/png" href="img/favicon.png">
 
-	<!--font-->
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
+		<!--font-->
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
 
-	<!--files we've made-->
-	<link rel="stylesheet" href="css/style.css">
+		<!--files we've made-->
+		<link rel="stylesheet" href="css/style.css">
 
-	<!--frameworks we're using-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="code/zim_1.4.4.js"></script>
-	<script src="code/createjs-2015.05.21.min.js"></script>
+		<!--frameworks we're using-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="code/zim_1.4.4.js"></script>
+		<script src="code/createjs-2015.05.21.min.js"></script>
 
-	<!-- these two give the slider its form-->
-	<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jqueryui.min.css'>
-	<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jquery-ui-slider-pips.min.css'>
+		<!-- these two give the slider its form-->
+		<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jqueryui.min.css'>
+		<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jquery-ui-slider-pips.min.css'>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-	<div class="container">
-		<div class="top">
-			<header>
-				<div class="toggle">
-					<div id="mTitle"><h1>REEL<span>FINDR</span></h1></div>
-					<div id="mRestart" onClick="goBack()"><h1>START<span>OVER</span></h1></div>
-				</div>
-			</header>
-		</div>
-
-		<div class="content">
-			<form action="movies_scroll.php" id="quiz" method="get">
-			<div class="overflow" id="overflow">
-
-				<!-- landing page -->
-
-				<div class = "intro" id="page0">
-					<section>
-						<h2>We've cherry picked some of the best films from a wide range genres so you can spend less time searching and more time watching.</br><span class=bold> Let us help you find the perfect movie.</span></h2>
-
-						<h2>What are you waiting for? Let's get started.</h2>
-
-						<!-- start button -->
-						<div class="submitbutton"><button type="button" class="button" onClick="nextQuestion()">Start</button></div>
-					</section>
-				</div>
-
-				<!-- genre page -->
-				<div class="question" id="page1">
-					<h2>What genre are you interested in?</h2>
-					<div class="answer">
-						<input type="text" name="genre" value="default" id="genre"><br>
-						<div class=button-area>
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="action" value="action">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="adventure" value="adventure">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="animation" value="animation">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="comedy" value="comedy">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="crime" value="crime">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="drama" value="drama">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="history" value="history">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="romance" value="romance">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="sci-fi" value="sci-fi">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="all" value="all">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div class="container">
+			<div class="top">
+				<header>
+					<div class="toggle">
+						<div id="mTitle"><h1>REEL<span>FINDR</span></h1></div>
+						<div id="mRestart" onClick="goBack()"><h1>START<span>OVER</span></h1></div>
 					</div>
-					</div>
-				</div>
-
-				<!-- decade page -->
-				<div class="question" id="page2">
-					<h2>What decade is your movie from?</h2>
-					<div class="answer">
-						<div id="chosenYears">1985 - 2015</div>
-						<br/><br/>
-						<div id="flat-slider"></div>
-						<input type="text" name="minYear" value="1985" id="minYear"><br>
-						<input type="text" name="maxYear" value="2015" id="maxYear"><br>
-						<div class=answer>
-							<input type="button" onClick="nextQuestion()" class="button" id="year" value="NEXT">
-						</div>
-					</div>
-				</div>
-
-				<!-- special effects page -->
-				<div class="question" id="page3">
-					<h2>Do you love special effects?</h2>
-					<div class="answer">
-						<input type="text" name="sfx" value="default" id="sfx"><br>
-						<div class=yn-button-area>
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SNo" value="no">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SEither" value="either">
-							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SYes" value="yes">
-						</div>
-					</div>
-				</div>
-
-				<!-- storyline -->
-				<div class="question" id="page4">
-					<h2>Are there kids watching?</h2>
-					<div class="answer">
-						<input type="text" name="pg" value="default" id="pg"><br>
-					<div class=yn-button-area>
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="PNo" value="no">
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="PYes" value="yes">
-					</div>
-					</div>
-				</div>
-
-				<div class="question" id="page5">
-					<div class="answer">
-						<input type="submit" name="submit" id="end">
-					</div>
-				</div>
+				</header>
 			</div>
-			</form>
+
+			<div class="content">
+				<form action="results.php" id="quiz" method="get">
+					<div class="overflow" id="overflow">
+
+						<!-- landing page -->
+						<div class = "intro" id="page0">
+							<section>
+								<p>
+									We've cherry picked some of the best films from a wide range of genres...
+									<br>So you can spend less time searching,
+									<br>and more time watching.
+								</p>
+								<h2>Let us help you find the perfect movie.</h2>
+								<br/>
+								<button type="button" class="button" onClick="nextQuestion()">Start</button>
+							</section>
+						</div>
+
+						<!-- genre page; each button is a selectable genre -->
+						<div class="question" id="page1">
+							<h2>What genre are you interested in?</h2>
+							<input type="text" name="genre" value="default" id="genre">
+
+							<div class=button-area>
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="action" value="action">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="adventure" value="adventure">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="animation" value="animation">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="comedy" value="comedy">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="crime" value="crime">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="drama" value="drama">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="history" value="history">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="romance" value="romance">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="sci-fi" value="sci-fi">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="all" value="all">
+							</div>
+						</div>
+
+						<!-- year page; slider allows user to pick a range of years -->
+						<div class="question" id="page2">
+							<h2>What decade is your movie from?</h2>
+							<div id="chosenYears">1985 - 2015</div>
+							<br/><br/>
+
+							<div id="flat-slider"></div>
+							<input type="text" name="minYear" value="1985" id="minYear"><br>
+							<input type="text" name="maxYear" value="2015" id="maxYear"><br>
+
+							<div class=yn-button-area>
+								<input type="button" onClick="nextQuestion()" class="genreBtn" id="year" value="NEXT">
+							</div>
+						</div>
+
+						<!-- special effects page, select yes, no, or either -->
+						<div class="question" id="page3">
+							<h2>Do you want to see lots of special effects?</h2>
+							<input type="text" name="sfx" value="default" id="sfx"><br>
+
+							<div class=yn-button-area>
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SNo" value="no">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SEither" value="either">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SYes" value="yes">
+							</div>
+						</div>
+
+						<!-- kids watching page; if yes, remove R rated movies -->
+						<div class="question" id="page4">
+							<h2>Are there kids watching?</h2>
+							<input type="text" name="pg" value="default" id="pg"><br>
+							<div class=yn-button-area>
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="PNo" value="no">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="PYes" value="yes">
+							</div>
+						</div>
+
+						<!-- last page which submits the form -->
+						<div class="question" id="page5">
+							<input type="submit" name="submit" id="end" value="find my movies">
+						</div>
+
+					<!-- end of overflow div -->
+					</div>
+				</form>
+			<!-- end of content div -->
+			</div>
+
+			<div class="footer">
+				<!-- social media links in the footer-->
+				<footer>
+					<p class="foot">
+						<a href="http://www.facebook.com/share.php?u=http://reel-findr.com/"><img src="img/facebook.png" class="smedia"></a>
+						<a href="http://ctt.ec/4dNIa" target="_blank"><img src="img/twitter.png" class="smedia"></a>
+						<a href="https://plusone.google.com/_/+1/confirm?hl=en&url=http%3A%2F%2F%20http://reel-findr.com/" target="_blank"><img src="img/google.png" class="smedia"></a>
+					</p>
+				</footer>
+			</div>
+		<!-- end of container-->
 		</div>
 
-		<div class="footer">
-			<!-- social media links in the footer-->
-			<footer>
-				<p class="foot">
-					<a href="http://www.facebook.com/share.php?u=http://reel-findr.com/"><img src="img/facebook.png" class="smedia"></a>
-					<a href="http://ctt.ec/4dNIa" target="_blank"><img src="img/twitter.png" class="smedia"></a>
-					<a href="https://plusone.google.com/_/+1/confirm?hl=en&url=http%3A%2F%2F%20http://reel-findr.com/" target="_blank"><img src="img/google.png" class="smedia"></a>
-				</p>
-			</footer>
-		</div>
-	</div>
+		<!-- javascript files that must be attached to the bottom of the file...due to the slider we used in #page2-->
+		<script src='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/js/jquery-plus-ui.min.js'></script>
 
-	<!-- javascript files that must be attached to the bottom of the file...due to the slider we used in #page2-->
-	<script src='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/js/jquery-plus-ui.min.js'></script>
+		<!-- this makes the ticks under the slider show up-->
+		<script src='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/js/jquery-ui-slider-pips.js'></script>
 
-	<!-- this makes the ticks under the slider show up-->
-	<script src='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/js/jquery-ui-slider-pips.js'></script>
+		<!-- our js file for this page; the other page has a separate one called scroller.js-->
+		<script src='js/script_pg1.js'></script>
 
-	<!-- our js file for this page; the other page has a separate one called scroller.js-->
-	<script src='js/script.js'></script>
-
-
-</body>
+	</body>
 </html>

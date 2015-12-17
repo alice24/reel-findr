@@ -1,81 +1,77 @@
 /*GENERAL CSS DECLARATIONS*/
-*{
+* {
 	font-family: 'Open Sans';
 	font-weight: 400;
+	text-transform: uppercase;
 }
 
-*:focus{
+*:focus {
 	outline: none;
 }
 
-html, body{
+html, body {
 	margin: 0;
 	padding: 0;
 	font-size: 12px;
 }
 
+a {
+  text-decoration: none;
+}
+
+p {
+	font-size:1.5em;
+	letter-spacing: 2px;
+}
+
 h1{
 	font-size:4em;
 	font-weight: 300;
-	text-align:center;
-	color:black;
-	text-transform: uppercase;
 	margin:15px 15px 0px 15px;
 }
 
 h2{
 	font-size:2em;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-}
-
-.intro h2{
-	padding: 0 20px 10px;
-}
-
-.bold{
 	font-weight: 700;
-	font-size: 1.2em;
-}
-
-a {
-    text-decoration: none;
+	letter-spacing: 2px;
 }
 
 span{
 	font-weight: 800;
 }
 
+
+/*DIVS ON BOTH PAGES*/
+/*the main div that contains all other divs
+a flex box!!*/
 .container{
 	position:absolute;
-	/*background:gray;*/
 	width:100%;
 	height:100%;
+
 	display: -webkit-flex;
 	-webkit-flex-direction: column;
 }
 
-#genre, #decade, #sfx, #pg, #minYear,#maxYear{
-	display:none;
-}
-
-.question h2{
-	text-transform: uppercase;
-	letter-spacing: 2px;
-}
-
+/*the top bar that holds the title
+fixed to the top of the page*/
 .top{
-	width:100%;
+	height:80px;
 	background-color: #FFDD00;
 	font-weight: 300;
-	height:80px;
 }
 
+/*toggle holds the h1 that contains the title
+it's to make sure the user has to hover over the title area to trigger
+the start over link instead of the whole top div*/
 .toggle{
-	width:300px;
 	margin: 0 auto;
+	width:300px;
 }
 
+/*two divs that each have an <h1> within
+depending on the jquery and hover, one will be displayed and the other will be hidden
+title is the title (Reelfindr)*/
 #mTitle{
 	left:0;
 	right:0;
@@ -84,99 +80,163 @@ span{
 	margin-right:auto;
 }
 
+/*clicking this will return the user to the reelfindr main page
+so it says start over*/
 #mRestart{
 	left:0;
 	right:0;
 	width:300px;
 	margin-left:auto;
 	margin-right:auto;
-	z-index:5;
 	display:none;
 }
 
-.fade{
-	width:300px;
-	margin: 0 auto;
-}
-
+/*the center div that holds all the content depending on the page
+flex box!!*/
 .content{
 	display: -webkit-flex;
 	-webkit-flex-direction:column;
 	-webkit-justify-content:center;
 	-webkit-align-items:center;
-	text-align:center;
-	width:100%;
-	background:white;
-	padding: 10px 0px 10px 0px;
 	-webkit-flex: 1 1 auto;
-}
 
-.results{
+	padding: 10px 0px 10px 0px;
 	width:100%;
-	-webkit-transition: all 1s linear;
+	text-align:center;
 }
 
-.items{
+/*the footer holds the social media icons
+fixed to the bottom of the page*/
+.footer{
+	text-align:right;
+	background:black;
+	padding: 5px 0px 5px 0px;
+	height:70px;
+}
+
+/*gives the social media icons a little bit of padding*/
+.foot{
+	margin-right:20px;
+}
+
+/*gives each social media button a bit of padding*/
+img[src$=".png"]{
+	padding-right:10px;
+}
+
+
+/*DIVS ON PAGE ONE (QUIZ PAGE)*/
+/*form is set to 100% width so the slider isn't compressed*/
+form{
+	width:100%;
+}
+
+/*this div only shows a certain height and the rest (overflow) is hidden
+which allows only one question to be displayed at once
+height is dynamic, but an initial height is set so it doesn't look
+weird for a few seconds before the js loads*/
+.overflow{
 	display: -webkit-flex;
-	-webkit-flex-wrap: nowrap;
-	-webkit-align-items:center;
+	-webkit-flex-direction: column;
+	height:300px;
+	overflow:hidden;
 }
 
-.item img{
-	width:100%;
-	height:100%;
+.question{
+	padding:30px 0px 30px 0px;
 }
+
+/*the input text areas which the buttons set the value of
+are all hidden to hide the fact that the whole thing is
+a web form...*/
+#genre, #decade, #sfx, #pg, #minYear,#maxYear{
+	display:none;
+}
+
+/*a div that shows what year the user has chosen
+it is changed dynamically by the slider's jquery.*/
+#chosenYears{
+  font-size:3em;
+  padding-bottom: 30px;
+}
+
+/*button-area is a flex box that displays 10 items (buttons) on the genre div.
+width is fixed for web size because it makes a nice cube*/
+.button-area{
+	display: -webkit-flex;
+	-webkit-flex-direction: row;
+  -webkit-flex-flow: row wrap;
+  -webkit-justify-content: space-around;
+	-webkit-flex-wrap: wrap;
+	-webkit-flex-grow: 1;
+
+	width:600px;
+	margin: 10px auto;
+  padding: 1em 2.4em;
+
+  font-size: .9em;
+  color: white;
+  text-decoration: none;
+}
+
+/*similar to button area, though there is no set size, and the justify
+content is different so the buttons aren't so spaced apart*/
+.yn-button-area{
+	display: -webkit-flex;
+	-webkit-flex-direction: row;
+  -webkit-flex-flow: row wrap;
+  -webkit-justify-content: center;
+	-webkit-flex-wrap: wrap;
+	-webkit-flex-grow: 1;
+
+  font-size: .9em;
+  color: white;
+  text-decoration: none;
+}
+
+/*there are three buttons that use this code;
+the first button to start, the last button of the form
+to submit, and the try again button if no results are found
+slight differences from the other button.
+this one has no increase size on hover animation*/
 .button, #end {
+	cursor: pointer;
+	display: block;
+	margin: 0 auto;
+	padding: 15px;
+	border: 4px solid #000;
+
   background-color: white;
-  font-family: 'Open Sans';
   font-size: 2em;
-  text-transform: uppercase;
-  padding: 15px;
-  border: 4px solid #000;
-  margin: 0 auto;
-  display: block;
-  cursor: pointer;
-  text-align: center;
   letter-spacing: 3px;
-  transition-property: color, background-color;
+
+  -webkit-transition-property: color, background-color;
   -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  z-index: 25;
 }
-
-#page0{
-	margin:0 auto;
-	width:60%;
-}
-
-#myCanvas {
-	background:#000000;
-	}
 
 .button:hover, #end:hover{
   background-color: black;
   color: white;
 }
 
-#page1{
-	margin: auto;
-	width:600px;
-}
-
+/*all the questions use this button
+the size increases on hover
+a set width is given so all the buttons are the same
+which makes them look nicer...*/
 .genreBtn{
+	cursor: pointer;
+	display: block;
+	margin: 8px 5px;
+	padding: 14px;
+	border: 3px solid #000;
 	width:170px;
+
 	background-color: white;
   font-size: 1.6em;
-  text-transform: uppercase;
-  padding: 14px;
-  border: 3px solid #000;
-  margin: 8px 5px;
-  display: block;
-  cursor: pointer;
-  text-align: center;
   letter-spacing: 3px;
-	transition-property: color, background-color;
-	transition: 0.3s ease-in-out;
+
+	-webkit-transition-property: color, background-color;
+	-webkit-transition: 0.3s ease-in-out;
 }
 
 .genreBtn:hover{
@@ -185,98 +245,32 @@ span{
 	color: white;
 }
 
-.button-area{
-	margin: 10px auto;
-	display: flex;
-	flex-direction: row;
-  -webkit-flex-flow: row wrap;
-  justify-content: space-around;
-	flex-wrap: wrap;
-  padding: 1em 2.4em;
-  font-size: .9em;
-  /*margin: 1em;*/
-  color: white;
-  text-decoration: none;
-  flex-grow: 1;
-  text-align: center;
+/*the slider!! we used a framework so there is a lot of code.*/
+#flat-slider{
+	margin:auto;
+	width:70%
 }
 
-.yn-button-area{
-	margin: auto;
-	display: flex;
-	flex-direction: row;
-  -webkit-flex-flow: row wrap;
-  justify-content: center;
-	flex-wrap: wrap;
-  font-size: .9em;
-  /*margin: 1em;*/
-  color: white;
-  text-decoration: none;
-  flex-grow: 1;
-  text-align: center;
-}
-
-
-.overflow{
-	width:100%;
-	display: -webkit-flex;
-	-webkit-flex-direction: column;
-	overflow:hidden;
-}
-
-.question{
-	padding: 50px 15px 50px 15px;
-}
-
-
-.footer{
-	text-align:right;
-	width:100%;
-	background:black;
-	padding: 5px 0px 5px 0px;
-	height:60px;
-}
-
-.foot{
-	margin-right:20px;
-}
-
-/*changes colour of slider (not active)*/
+/*color of inactive pips*/
 [id*=flat-slider].ui-slider,
 [id*=flat-slider].ui-slider .ui-slider-pip .ui-slider-line {
   background: yellow;
 }
 
-/*changes border of slider*/
+/*changes border of slider handle*/
 [id*=flat-slider].ui-slider .ui-slider-handle.ui-state-hover,
 [id*=flat-slider].ui-slider .ui-slider-handle.ui-state-focus,
 [id*=flat-slider].ui-slider .ui-slider-handle.ui-state-active {
   border-color: black;
 }
 
-/*needs to go in a div or it dies*/
-.stuff {
-  padding: 50px 50px 50px;
-  max-width: 700px;
-  margin: auto;
-}
-
-#chosenYears{
-  font-size:3em;
-  padding-bottom: 30px;
-}
-
-#flat-slider{
-	margin:auto;
-	width:80%
-}
-
+/*background of the inactive portion of the slider main bar*/
 #flat-slider.ui-slider {
-  background: black;
+  background: #CCC;
   border: none;
-  border-radius: 0;
 }
 
+/*slider handle properties*/
 #flat-slider.ui-slider .ui-slider-handle {
   width: 20px;
   height: 20px;
@@ -285,6 +279,7 @@ span{
   transition: border 0.4s ease;
 }
 
+/*the small floating slider handle is actually rotated to fit on the line*/
 #flat-slider.ui-slider.ui-slider-horizontal .ui-slider-handle {
   -webkit-transform: rotateZ(45deg);
           transform: rotateZ(45deg);
@@ -293,22 +288,18 @@ span{
   margin-left: -10px;
 }
 
-#flat-slider.ui-slider .ui-slider-handle.ui-state-hover,
-#flat-slider.ui-slider .ui-slider-handle.ui-state-focus,
-#flat-slider.ui-slider .ui-slider-handle.ui-state-active {
-  border-color: #172f38;
-	background:black;
-}
-
+/*the pip/ticks animation for the inactive area*/
 #flat-slider.ui-slider .ui-slider-pip .ui-slider-line {
   background: #FFDD00;
   transition: all 0.4s ease;
 }
 
+/*height of the slider bar*/
 #flat-slider.ui-slider.ui-slider-horizontal {
   height: 6px;
 }
 
+/*labels on the slider (the two years)*/
 #flat-slider.ui-slider .ui-slider-pip .ui-slider-label {
     color:black;
 		font-size: 30px;
@@ -316,64 +307,108 @@ span{
     margin-bottom:30px;
 	}
 
+/*distance from pips to slider*/
 #flat-slider.ui-slider.ui-slider-horizontal .ui-slider-pip {
   top: 10px;
 }
 
+/*the shorter pips that are inactive*/
 #flat-slider.ui-slider.ui-slider-horizontal .ui-slider-pip .ui-slider-line {
   width: 2px;
   height: 6px;
   margin-left: -1px;
 }
 
+/*the longer pips of selected years*/
 #flat-slider.ui-slider.ui-slider-horizontal .ui-slider-pip[class*=ui-slider-pip-selected] .ui-slider-line {
   height: 20px;
 }
 
+/*the longer pips between the selected years*/
 #flat-slider.ui-slider.ui-slider-horizontal .ui-slider-pip.ui-slider-pip-inrange .ui-slider-line {
   height: 12px;
 }
 
+/*color of pips in the selected range*/
 #flat-slider .ui-slider-range,
 #flat-slider .ui-slider-pip[class*=ui-slider-pip-selected] .ui-slider-line,
 #flat-slider .ui-slider-pip.ui-slider-pip-inrange .ui-slider-line {
-  background-color: #CCC;
+  background-color: #000;
 }
 
 
+/*DIVS ON PAGE TWO (RESULTS PAGE)*/
+/*this div displays the results
+need to set width since its contents are made dynamically*/
+.results{
+	width:100%;
+}
+
+/*items is a long div that contains ITEM
+one ITEM is made per movie found*/
+.items{
+	display: -webkit-flex;
+	-webkit-flex-wrap: nowrap;
+	-webkit-align-items:center;
+}
+
+/*the movie posters are flexible in order to fit
+the item div's padding etc.*/
+.item img{
+	width:100%;
+	height:100%;
+}
+
+
+/*the following 3 divs are created dynamically*/
+/*title div contains the title of the movie*/
+.title{
+	margin:0 auto;
+	padding-top:50px;
+
+	letter-spacing: 4px;
+  font-size: 3.5rem;
+	font-weight:600;
+}
+
+/*dir div contains the director of the movie*/
+.dir{
+	margin:0 auto;
+	padding:10px 0px 30px 0px;
+
+	letter-spacing: 4px;
+  font-size: 2.5rem;
+ 	font-weight:400;
+}
+
+/*summary div contains the summary of the movie*/
+.summary{
+  margin:0 auto;
+	width:70%;
+
+	text-align:left;
+  font-size: 2rem;
+	letter-spacing: 1px;
+	line-height: 40px;
+}
+
+/*scroller css!!
+the scroller is what allows the user to scroll through movies on hover*/
 .scroller {
-  background: none;
-  border: none;
-  text-align: center;
   width: 100%;
   height: 268px;
   position: relative;
   overflow:hidden;
 }
 
-.scroller:before {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.scroller:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
+/*makes the movie images display properly*/
 .scroller .items {
   height: 100%;
   position: absolute;
 }
 
-.scrollMiddle{
-	-webkit-transition: left 1s;
-}
-
+/*each individual movie item which is displayed in a line*/
 .scroller .item {
-  background-color: #FFDD00;
   margin-left: 10px;
   float: left;
   width: 150px;
@@ -381,65 +416,44 @@ span{
 	-webkit-transition: width 1s, height 1s;
 }
 
+/*this is added when not scrolling so the items has a scrolling animation on click*/
+.scrollMiddle{
+	-webkit-transition: left 1s;
+}
+
+/*these show the gray bar on hover*/
 .scroller .scroll {
-  background-color: rgba(0, 0, 0, 0.5);
-  height: 100%;
+	position: absolute;
+	padding-top: 104px;
+	height: 100%;
   width: 100px;
-  position: absolute;
-  z-index: 2000;
-  visibility: hidden;
+	z-index: 2000;
+	visibility: hidden;
+
+  background-color: rgba(0, 0, 0, 0.5);
   font-size: 50px;
-  padding-top: 104px;
   color: white;
 }
 
-.scroller .scroll.right {
-  right: 0px;
-}
-
+/*hide the scroller until you scroll on it*/
 .scroller:hover .scroll {
   visibility: visible;
 }
 
+/*moves the right scroller to the far right*/
+.scroller .scroll.right {
+  right: 0px;
+}
+
+/*hovering over the movie poster will increase their size
+important allows the items to be hovered no matter what
+since it changes once you click on it*/
 .item:hover{
-	width: 182px;
-  height: 268px;
+	width: 182px !important;
+  height: 268px !important;
 }
 
-.smedia{
-	padding-right:10px;
-}
-
-.title{
-	padding-top:50px;
-	letter-spacing: 4px;
-	text-transform: uppercase;
-  margin:0 auto;
-  font-size: 3.5rem;
-	font-weight:600;
- }
-
- .dir{
- 	letter-spacing: 4px;
- 	text-transform: uppercase;
-   margin:0 auto;
-	 	width:700px;
-   font-size: 2.5rem;
- 	font-weight:400;
-	padding:10px 0px 30px 0px;
-  }
-
-.summary{
-  margin:0 auto;
-	text-align:left;
-  font-size: 2rem;
-	width:700px;
-	letter-spacing: 1px;
-	line-height: 40px;
-	text-transform: uppercase;
-
- }
-
+/*the animation for the actual scrolling part which is triggered and timed by jquery*/
 @-webkit-keyframes left_scroll {
   0% {
     left: 0px;
