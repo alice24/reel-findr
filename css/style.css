@@ -1,10 +1,11 @@
-* {
+/*GENERAL CSS DECLARATIONS*/
+*{
 	font-family: 'Open Sans';
 	font-weight: 400;
 }
 
 *:focus{
-  outline:none;
+	outline: none;
 }
 
 html, body{
@@ -13,26 +14,22 @@ html, body{
 	font-size: 12px;
 }
 
-/*.dialog{
-  margin:500px auto;
-  color:green;
-}*/
-
 h1{
 	font-size:4em;
 	font-weight: 300;
 	text-align:center;
 	color:black;
+	text-transform: uppercase;
 	margin:15px 15px 0px 15px;
 }
 
 h2{
 	font-size:2em;
+	letter-spacing: 2px;
+	text-transform: uppercase;
 }
 
 .intro h2{
-	letter-spacing: 2px;
-	text-transform: uppercase;
 	padding: 0 20px 10px;
 }
 
@@ -71,12 +68,40 @@ span{
 	width:100%;
 	background-color: #FFDD00;
 	font-weight: 300;
-	position: relative;
-    z-index: 5;
+	height:80px;
+}
+
+.toggle{
+	width:300px;
+	margin: 0 auto;
+}
+
+#mTitle{
+	left:0;
+	right:0;
+	width:300px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#mRestart{
+	left:0;
+	right:0;
+	width:300px;
+	margin-left:auto;
+	margin-right:auto;
+	z-index:5;
+	display:none;
+}
+
+.fade{
+	width:300px;
+	margin: 0 auto;
 }
 
 .content{
 	display: -webkit-flex;
+	-webkit-flex-direction:column;
 	-webkit-justify-content:center;
 	-webkit-align-items:center;
 	text-align:center;
@@ -118,6 +143,15 @@ span{
   transition-duration: 0.3s;
   z-index: 25;
 }
+
+#page0{
+	margin:0 auto;
+	width:60%;
+}
+
+#myCanvas {
+	background:#000000;
+	}
 
 .button:hover, #end:hover{
   background-color: black;
@@ -184,6 +218,7 @@ span{
 
 
 .overflow{
+	width:100%;
 	display: -webkit-flex;
 	-webkit-flex-direction: column;
 	overflow:hidden;
@@ -226,13 +261,6 @@ span{
   margin: auto;
 }
 
-<<<<<<< 98971d31c3cc16ba629e75cde756e0c33e953311
-/*body {
-  background: #555555;
-}*/
-
-=======
->>>>>>> Added Movies && Changed JS
 #chosenYears{
   font-size:3em;
   padding-bottom: 30px;
@@ -240,7 +268,7 @@ span{
 
 #flat-slider{
 	margin:auto;
-	width:75%
+	width:80%
 }
 
 #flat-slider.ui-slider {
@@ -337,9 +365,11 @@ span{
 
 .scroller .items {
   height: 100%;
-  /*background-color: green;*/
   position: absolute;
+}
 
+.scrollMiddle{
+	-webkit-transition: left 1s;
 }
 
 .scroller .item {
@@ -353,7 +383,6 @@ span{
 
 .scroller .scroll {
   background-color: rgba(0, 0, 0, 0.5);
-  /* opacity: 0.4; */
   height: 100%;
   width: 100px;
   position: absolute;
@@ -400,7 +429,7 @@ span{
 	padding:10px 0px 30px 0px;
   }
 
-.dialog{
+.summary{
   margin:0 auto;
 	text-align:left;
   font-size: 2rem;
@@ -408,8 +437,6 @@ span{
 	letter-spacing: 1px;
 	line-height: 40px;
 	text-transform: uppercase;
-
-  /*background:yellow;*/
 
  }
 

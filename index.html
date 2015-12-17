@@ -2,24 +2,35 @@
 <html>
 <head>
 	<title>Reel Findr</title>
-	<link rel="stylesheet" href="css/style.css">
-
+	<!-- favicon-->
 	<link rel="icon" type="image/png" href="img/favicon.png">
+
+	<!--font-->
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--files we've made-->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!--frameworks we're using-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="code/zim_1.4.4.js"></script>
+	<script src="code/createjs-2015.05.21.min.js"></script>
 
 	<!-- these two give the slider its form-->
 	<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jqueryui.min.css'>
 	<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jquery-ui-slider-pips.min.css'>
 
-
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 	<div class="container">
 		<div class="top">
-			<header><h1>REEL<span>FINDR<span></h1></header>
+			<header>
+				<div class="toggle">
+					<div id="mTitle"><h1>REEL<span>FINDR</span></h1></div>
+					<div id="mRestart" onClick="goBack()"><h1>START<span>OVER</span></h1></div>
+				</div>
+			</header>
 		</div>
 
 		<div class="content">
@@ -45,16 +56,16 @@
 					<div class="answer">
 						<input type="text" name="genre" value="default" id="genre"><br>
 						<div class=button-area>
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="action" value="action">
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="adventure" value="adventure">
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="animation" value="animation">
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="comedy" value="comedy">
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="crime" value="crime">
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="drama" value="drama">
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="history" value="history">
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="romance" value="romance">
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="sci-fi" value="sci-fi">
-						<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="all" value="all">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="action" value="action">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="adventure" value="adventure">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="animation" value="animation">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="comedy" value="comedy">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="crime" value="crime">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="drama" value="drama">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="history" value="history">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="romance" value="romance">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="sci-fi" value="sci-fi">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="all" value="all">
 					</div>
 					</div>
 				</div>
@@ -63,7 +74,6 @@
 				<div class="question" id="page2">
 					<h2>What decade is your movie from?</h2>
 					<div class="answer">
-
 						<div id="chosenYears">1985 - 2015</div>
 						<br/><br/>
 						<div id="flat-slider"></div>
@@ -82,6 +92,7 @@
 						<input type="text" name="sfx" value="default" id="sfx"><br>
 						<div class=yn-button-area>
 							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SNo" value="no">
+							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SEither" value="either">
 							<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SYes" value="yes">
 						</div>
 					</div>
@@ -107,7 +118,9 @@
 			</div>
 			</form>
 		</div>
+
 		<div class="footer">
+			<!-- social media links in the footer-->
 			<footer>
 				<p class="foot">
 					<a href="http://www.facebook.com/share.php?u=http://reel-findr.com/"><img src="img/facebook.png" class="smedia"></a>
@@ -118,11 +131,15 @@
 		</div>
 	</div>
 
+	<!-- javascript files that must be attached to the bottom of the file...due to the slider we used in #page2-->
 	<script src='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/js/jquery-plus-ui.min.js'></script>
 
 	<!-- this makes the ticks under the slider show up-->
 	<script src='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/js/jquery-ui-slider-pips.js'></script>
+
+	<!-- our js file for this page; the other page has a separate one called scroller.js-->
 	<script src='js/script.js'></script>
+
 
 </body>
 </html>

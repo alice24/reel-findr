@@ -46,6 +46,19 @@ function adjustHeight(){
 	console.log(container.clientHeight);
 }
 
+function goBack(){
+  window.location.href = 'index.html';
+}
+
+$(".toggle").hover(function (e) {
+    $("#mTitle").fadeOut(0);
+    $("#mRestart").fadeIn(0);
+  },function (e) {
+    $("#mRestart").fadeOut(0);
+    $("#mTitle").fadeIn(0);
+  });
+
+
 /*slider's animation; eases a bit when it moves*/
 $.extend($.ui.slider.prototype.options, {
     animate: 300
