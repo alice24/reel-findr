@@ -482,3 +482,17 @@ since it changes once you click on it*/
     right: 100%;
   }
 }
+
+
+/*------------------------------------------------------*/
+/*--------RESPONSIVE PAGES FOR TABLET/SMARTPHONE--------*/
+/*------------------------------------------------------*/
+
+/*--------TABLET--------*/
+@media screen and (max-width: 959px) {
+}
+
+
+/*--------SMARTPHONE--------*/
+@media screen and (max-width: 639px) {
+}
