@@ -13,8 +13,10 @@
 
 		<!--frameworks we're using-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="code/zim_1.4.4.js"></script>
+		<script type="text/javascript" src="code/zim_1.5.2.js"></script>
+		<script type="text/javascript" src="code/zim_1.5.2_min.js"></script>
 		<script src="code/createjs-2015.05.21.min.js"></script>
+
 
 		<!-- these two give the slider its form-->
 		<link rel='stylesheet prefetch' href='http://simeydotme.github.io/jQuery-ui-Slider-Pips/dist/css/jqueryui.min.css'>
@@ -87,12 +89,12 @@
 
 						<!-- special effects page, select yes, no, or either -->
 						<div class="question" id="page3">
-							<h2>Do you want to see lots of special effects?</h2>
+							<h2>Are you big on special effects?</h2>
 							<input type="text" name="sfx" value="default" id="sfx"><br>
 
 							<div class=yn-button-area>
 								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SNo" value="no">
-								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SEither" value="either">
+								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SEither" value="not sure">
 								<input type="button" onClick="chooseAnswer(this)" class="genreBtn" id="SYes" value="yes">
 							</div>
 						</div>
@@ -118,6 +120,9 @@
 			<!-- end of content div -->
 			</div>
 
+			<!-- canvas being added here -->
+			<canvas id="myCanvas"  height="250" width="900">CANVAS</canvas>
+
 			<div class="footer">
 				<!-- social media links in the footer-->
 				<footer>
@@ -139,6 +144,7 @@
 
 		<!-- our js file for this page; the other page has a separate one called scroller.js-->
 		<script src='js/script_pg1.js'></script>
+		<script src='js/stage.js'></script>
 
 	</body>
 </html>

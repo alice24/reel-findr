@@ -74,7 +74,7 @@
 				//the desired years and whether or not they have a focus on special effects.
 				$sql = $sql . " year BETWEEN $minYear AND $maxYear";
 
-				if ($sfx != 'either'){
+				if ($sfx != 'not sure'){
 					 $sql = $sql . " AND spFx = '$sfx'";
 				}
 

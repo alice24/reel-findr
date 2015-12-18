@@ -32,6 +32,7 @@ var selection;
 //when the window loads, adjust the height of the div to only show the first page
 window.onload = function() {
 	adjustHeight();
+	document.getElementById('myCanvas').classList.add("hideCanvas");
 }
 
 //when the window is resized, also adjust the height of the div
@@ -63,6 +64,23 @@ function nextQuestion(){
 
 	//adjust the height of the div to show the new page
 	adjustHeight();
+
+	// ------Adding this code to call the animations only on the required pages----//
+ 	if (pages[counter]=="page3"){
+		vader();
+		document.getElementById('myCanvas').classList.remove("hideCanvas");
+ 	}
+
+ 	if (pages[counter]=="page4"){
+		cont.removeChild(darth);
+ 		lorean();
+ 	}
+
+ 	if (pages[counter]=="page5"){
+		cont.removeChild(car);
+		cont.removeChild(mouse);
+		fg();
+ 	}
 }
 
 //this div adjusts the height of the overflow div so that only the proper div is shown

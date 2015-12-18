@@ -359,6 +359,7 @@ call the pd.immediate(baseValue) method with your desired baseValue (not targetV
 METHODS
 convert(input) - converts a base value to a target value
 immediate(input) - immediately sets the target value (no damping)
+dispose() - clears interval
 
 PROPERTIES
 damp - can adjust this dynamically (usually just pass it in as a parameter to start)
@@ -413,8 +414,7 @@ damp - can adjust this dynamically (usually just pass it in as a parameter to st
 			
 			desiredAmount = targetAmount;			
 			differenceAmount = desiredAmount - lastAmount;									
-			lastAmount += differenceAmount*that.damp;						
-			if (targetRound) {lastAmount = Math.round(lastAmount);}					
+			lastAmount += differenceAmount*that.damp;							
 		}		
 		
 		this.immediate = function(n) {
@@ -425,8 +425,12 @@ damp - can adjust this dynamically (usually just pass it in as a parameter to st
 		}
 		
 		this.convert = function(n) {
-			baseAmount = n;			
-			return lastAmount;
+			baseAmount = n;	
+			if (targetRound) {
+				return Math.round(lastAmount);
+			} else {			
+				return lastAmount;
+			}
 		}
 		
 		this.dispose = function() {
@@ -436,23 +440,64 @@ damp - can adjust this dynamically (usually just pass it in as a parameter to st
 
 
 	// DOM CODE	
+	
+/*--
+zim.scrollX = function(num, time)
+num and time are optional
+if not provided, this gets how many pixels from the left the browser window has been scrolled
+if only num is provided it scrolls the window to this x position
+if num and time are provided it animates the window to the x position in time milliseconds
+--*/
+	zim.scrollX = function(num, time) {	
+		return zim.abstractScroll("X", "Left", num, time);
+	}
+	
 
 /*--
-zim.scrollY = function()
-how many pixels down from the top the browser window has been scrolled
+zim.scrollY = function(num, time)
+num and time are optional
+if not provided, this gets how many pixels from the top the browser window has been scrolled
+if only num is provided it scrolls the window to this y position
+if num and time are provided it animates the window to the y position in time milliseconds
 --*/
-	zim.scrollY = function() {		
-		var safari = 0;
-		var browser=navigator.appName;
-		var navindex=navigator.userAgent.indexOf('Safari');
-		if (navindex != -1 || browser=='Safari') {
-			var safari = 1;
-		}
-		if (!safari && document.compatMode == 'CSS1Compat') {				
-			return document.documentElement.scrollTop;
+	zim.scrollY = function(num, time) {	
+		return zim.abstractScroll("Y", "Top", num, time);
+	}
+	
+	zim.abstractScroll = function(dir, side, num, time) {
+		var perpend = (dir == "X") ? "Y" : "X"; // perpendicular direction
+		if (zot(num)) {	
+			var safari = 0;
+			var browser=navigator.appName;
+			var navindex=navigator.userAgent.indexOf('Safari');
+			if (navindex != -1 || browser=='Safari') {
+				var safari = 1;
+			}
+			if (!safari && document.compatMode == 'CSS1Compat') {				
+				return document.documentElement["scroll"+side];
+			} else {
+				return document.body["scroll"+side];
+			}
+		} else if (zot(time)) {
+			window.scrollTo(zim["scroll"+perpend](), num);
 		} else {
-			return document.body.scrollTop;
-		}			
+			var interval = 50;
+			if (time < interval) time = interval;
+			var steps = time/interval;
+			var current = zim["scroll"+dir]();
+			var amount = num - current;
+			var diff = amount/steps;
+			var count = 0;
+			var scrollInterval = setInterval(function() {
+				count++;
+				current+=diff;
+				window.scrollTo(zim["scroll"+perpend](), current);
+				if (count >= steps) {
+					window.scrollTo(zim["scroll"+perpend](), num);
+					clearInterval(scrollInterval);
+				}				
+			}, interval);			
+		}
 	}
 	
 /*--
@@ -929,6 +974,13 @@ convenience function (wraps createjs.Tween)
 to animate an object target to position x, y in t milliseconds
 with optional ease and a callBack function and params (send an array, for instance)
 and props for TweenJS tween (see CreateJS documentation) defaults to override:true
+note, this is where you can set loop:true to loop animation
+added to props as a convenience are:
+rewind:true - rewinds (reverses) animation
+rewindWait:ms - milliseconds to wait in the middle of the rewind (default 0 ms)
+rewindCall:function - calls function at middle of rewind animation
+rewindParams:obj - parameters to send rewind function
+
 can set frames per second as fps parameter
 returns target for chaining
 --*/
@@ -937,11 +989,17 @@ returns target for chaining
 	}
 	
 /*--
-zim.animate = function(target, obj, t, ease, callBack, params, wait, props)
+zim.animate = function(target, obj, t, ease, callBack, params, wait, props, fps)
 convenience function (wraps createjs.Tween)
 to animate object o properties in t milliseconds
+added convinience property of scale that does both scaleX and scaleY
 with optional ease and a callBack function and params (send an array, for instance)
 and props for TweenJS tween (see CreateJS documentation) defaults to override:true
+note, this is where you can set loop:true to loop animation
+added to props as a convenience are:
+rewind:true - rewinds (reverses) animation
+rewindWait:ms - milliseconds to wait in the middle of the rewind (default 0 ms)
+rewindCall:function - calls function at middle of rewind animation
 can set frames per second as fps parameter
 returns target for chaining
 --*/	
@@ -951,15 +1009,66 @@ returns target for chaining
 		if (zot(wait)) wait = 0;
 		if (zot(props)) props = {override: true};
 		if (zot(fps)) fps = 60;
-		createjs.Tween.get(target, props)
-			.wait(wait)
-			.to(obj, t, createjs.Ease[ease])				
-			.call(doneAnimating);
+		if (!zot(obj.scale)) {
+			obj.scaleX = obj.scaleY = obj.scale;
+			delete obj.scale;
+		}
+		if (props.rewind) {
+			// flip second ease
+			if (ease) {
+				// backIn backOut backInOut
+				var ease2 = ease;
+				if (ease2.indexOf("InOut") == -1) {
+					if (ease2.indexOf("Out") != -1) {
+						ease2 = ease2.replace("Out", "In"); 	
+					} else if (ease2.indexOf("In") != -1) {
+						ease2 = ease2.replace("In", "Out"); 	
+					}
+				}
+			}
+			var obj2 = {}; var wait2 = 0;
+			for (var i in obj) {
+				obj2[i] = target[i];
+			}
+			delete props.rewind;
+			if (props.rewindWait) {
+				wait2 = props.rewindWait;
+				delete props.rewindWait;
+			}
+			if (props.rewindCall) {
+				var callBack2 = props.rewindCall;
+				var params2 = props.rewindParams;
+				delete props.rewindCall;
+				delete props.rewindParams;
+				createjs.Tween.get(target, props)
+					.wait(wait)
+					.to(obj, t, createjs.Ease[ease])
+					.call(rewindCall)
+					.wait(wait2)
+					.to(obj2, t, createjs.Ease[ease2])				
+					.call(doneAnimating);
+			} else {
+				createjs.Tween.get(target, props)
+					.wait(wait)
+					.to(obj, t, createjs.Ease[ease])
+					.wait(wait2)
+					.to(obj2, t, createjs.Ease[ease2])				
+					.call(doneAnimating);
+			}
+		} else {
+			createjs.Tween.get(target, props)
+				.wait(wait)
+				.to(obj, t, createjs.Ease[ease])				
+				.call(doneAnimating);
+		}
 		var listener = createjs.Ticker.on("tick", target.getStage());	
 		createjs.Ticker.setFPS(fps);
 		function doneAnimating() {
 			if (callBack && typeof callBack === 'function') {(callBack)(params);}
 			createjs.Ticker.off("tick", listener);
+		}	
+		function rewindCall() {
+			if (callBack2 && typeof callBack2 === 'function') {(callBack2)(params2);}
 		}	
 		return target;	
 	}	
@@ -1084,24 +1193,49 @@ will not be resized - really just to use while building and then comment it out 
 		if (obj.getStage()) obj.getStage().update();
 		return obj;		
 	}
-	
+
 /*--
-zim.centerReg = function(obj)
+zim.centerReg = function(obj, container)
 centers the registration point on the bounds - obj must have bounds set
+if container is specified then sets obj x and y to half the width and height of container
 just a convenience function - returns obj for chaining
 --*/	
-	zim.centerReg = function(obj) {
-		if (zot(obj) || !obj.getBounds) {zog("zim create - centerReg(): please provide object with bounds set"); return;}		
+	zim.centerReg = function(obj, container) {
+		if (zot(obj) || !obj.getBounds) {zog("zim create - centerReg(): please provide object with bounds set"); return;}	
+		if (!zot(container)) {
+			if (!container.getBounds) {
+				zog("zim create - centerReg(): please provide container with bounds set"); 
+				return;
+			} else {
+				obj.x = container.getBounds().width/2;
+				obj.y = container.getBounds().height/2;
+			}
+		}
 		var oB = obj.getBounds();
-		obj.regX = oB.width/2;
-		obj.regY = oB.height/2;
+		obj.regX = oB.x + oB.width/2;
+		obj.regY = oB.y + oB.height/2;
 		return obj;
 	}
 
 	return zim;
 } (zim || {});
 
-
+/*--
+zim.expand = function(obj, padding)
+adds a createjs hitArea to an object with an extra padding of padding (default 20)
+good for making mobile interaction better on labels, buttons, etc.
+returns object for chaining
+--*/	
+	zim.expand = function(obj, padding) {
+		if (zot(obj) || !obj.getBounds) {zog("zim create - expand(): please provide object with bounds set"); return;}	
+		if (zot(padding)) padding = 20;
+		var oB = obj.getBounds();
+		var rect = new createjs.Shape();
+		rect.graphics.f("0").r(oB.x-padding,oB.y-padding,oB.width+2*padding,oB.height+2*padding);
+		obj.hitArea = rect;
+		return obj;
+	}
+	
 
 ////////////////  ZIM BUILD  //////////////
 
@@ -1323,6 +1457,12 @@ center defaults to true and puts the registration point to the center
 the actual center is not really the weighted center 
 so can pass in an adjust which brings the center towards its vertical base
 
+METHODS
+setFill(color)
+setStroke(color)
+setStrokeSize(size) - number
+clone() - makes a copy
+
 PROPERTIES
 shape - gives access to the triangle shape
 color - get and set the fill color
@@ -1379,7 +1519,6 @@ if you nest things inside and want to drag them, will want to set to true
 			// find last angle
 			var angle3 = 180 - angle1 - angle2;
 			
-
 			// the next line is b the angle will be relative to the length of c
 			// if c is the longest, then the angle is angle1
 			// if c is the second longest, then the angle is angle2, etc.
@@ -1515,7 +1654,7 @@ dispatches no events
 					return t;
 				},
 				set: function(value) {
-					if (value == 0) {value = " ";}
+					if (zot(value)) {value = " ";}
 					obj.text = value;
 					that.setBounds(0,0,obj.getBounds().width,obj.getBounds().height);
 				}
@@ -1553,7 +1692,7 @@ dispatches no events
 	
 		
 /*--
-zim.Button = function(width, height, label, backingColor, backingRollColor, borderColor, borderThickness, corner, shadowColor, shadowBlur)
+zim.Button = function(width, height, label, backingColor, backingRollColor, borderColor, borderThickness, corner, shadowColor, shadowBlur, buttonPadding)
 
 Button Class
 
@@ -1569,6 +1708,7 @@ width, height,
 label, // ZIM Label or plain text for default settings
 backingColor, backingRollColor, borderColor, borderThickness, 
 corner, shadowColor (set to -1 for no shadow), shadowBlur
+buttonPadding (default 0) adds extra hit area to the button for mobile
 
 METHODS
 dispose() - to get rid of the button and listeners
@@ -1582,7 +1722,7 @@ backing - references the backing of the button
 EVENTS
 dispatches no events - you make your own click event
 --*/		
-	zim.Button = function(width, height, label, backingColor, backingRollColor, borderColor, borderThickness, corner, shadowColor, shadowBlur) {
+	zim.Button = function(width, height, label, backingColor, backingRollColor, borderColor, borderThickness, corner, shadowColor, shadowBlur, buttonPadding) {
 	
 		function makeButton() {
 			
@@ -1596,7 +1736,8 @@ dispatches no events - you make your own click event
 			if (zot(borderThickness)) borderThickness=1;
 			if (zot(corner)) corner=20;
 			if (zot(shadowColor)) shadowColor="rgba(0,0,0,.3)";
-			if (zot(shadowBlur)) shadowBlur=16;			
+			if (zot(shadowBlur)) shadowBlur=16;		
+			if (zot(buttonPadding)) buttonPadding=0;			
 			if (zot(label)) label = "PRESS";			
 			if (typeof label === "string" || typeof label === "number") label = new zim.Label(label, 36, "arial", "white");			
 			
@@ -1611,6 +1752,12 @@ dispatches no events - you make your own click event
 			g.rr(0, 0, width, height, corner);
 			this.addChild(buttonBacking);
 			this.backing = buttonBacking;
+			
+			if (buttonPadding > 0) {
+				var rect = new createjs.Shape();
+				rect.graphics.f("#000").r(-buttonPadding,-buttonPadding,width+buttonPadding*2,height+buttonPadding*2);
+				this.hitArea = rect;
+			}
 								
 			if (shadowBlur > 0) buttonBacking.shadow = new createjs.Shadow(shadowColor, 3, 3, shadowBlur);
 			this.setBounds(0,0,width,height);
@@ -1875,6 +2022,7 @@ then ask for the properties above for info
 					if (data.selected && data.selected === true) {
 						if (!selectedCheck) {
 							selectedCheck = true; // first item marked selected
+							that.id = data.id;
 						} else {
 							data.selected = "false"; // turn off selected
 						}
@@ -1934,11 +2082,14 @@ then ask for the properties above for info
 					but.addChild(label);
 					label.x = but.getBounds().width;
 					label.y = size/8; 
-					that.label = label;
 					but.setBounds(-margin, -margin, size+margin*2+label.getBounds().width, Math.max(size+margin*2, label.getBounds().height));
 					fullWidth = label.x + label.width;
 				}
-				if (mySelected) but.addChild(check);
+				if (mySelected) {
+					but.addChild(check);					
+					that.label = label;				
+					if (that.label) that.text = label.text;
+				}
 								
 				var backing = new createjs.Shape();
 				g = backing.graphics;				
@@ -2242,9 +2393,8 @@ hide() - hides the waiter
 PROPERTIES
 display - reference to the waiter backing graphic
 
-EVENTS
-dispatches a "close" event when closed by clicking on backing
 --*/	
+
 	zim.Waiter = function(container, speed, backingColor, circleColor, corner, shadowColor, shadowBlur) {
 		
 		function makeWaiter() {
@@ -2353,7 +2503,7 @@ dispatches a "close" event when closed by clicking on backing
 
 
 /*--
-zim.Stepper = function(stepArray, width, backingColor, strokeColor, label, vertical, arrows, corner, shadowColor, shadowBlur)
+zim.Stepper = function(stepArray, width, backingColor, strokeColor, label, vertical, arrows, corner, shadowColor, shadowBlur, loopStepper)
 
 Stepper Class
 
@@ -2396,7 +2546,7 @@ dispatches a "change" event when changed by pressing an arrow or a keyboard arro
 			
 			// if (zon) zog("zim build - Stepper");
 			
-			if (zot(stepArray)) stepArray = [1,2,3,4,5,6,7,8,9,10];
+			if (zot(stepArray)) stepArray = [0,1,2,3,4,5,6,7,8,9];
 			if (zot(width)) width=200; 
 			if (zot(backingColor)) backingColor="white";
 			if (zot(strokeColor)) strokeColor=null;
@@ -2418,6 +2568,8 @@ dispatches a "change" event when changed by pressing an arrow or a keyboard arro
 			//if (shadowBlur > 0) prev.shadow = new createjs.Shadow(shadowColor, 3, 3, shadowBlur);
 			//this.addChild(prev);
 			
+			label.mouseChildren = false;
+			label.mouseEnabled = false;
 			
 			var prev = this.arrowPrev = new createjs.Container();
 			this.addChild(prev);
@@ -2445,6 +2597,7 @@ dispatches a "change" event when changed by pressing an arrow or a keyboard arro
 			}
 			
 			var box = this.textBox = new createjs.Shape();
+			box.cursor = "pointer";
 			this.addChild(box);
 			box.setBounds(0, 0, width, height);
 			if (strokeColor != null) box.graphics.s(strokeColor).ss(1.5);
@@ -2466,7 +2619,6 @@ dispatches a "change" event when changed by pressing an arrow or a keyboard arro
 			}
 			label.x = box.x+(box.getBounds().width-label.getBounds().width)/2;
 			label.y = box.y+(box.getBounds().height-label.getBounds().height)/2;
-			//zim.outline(label);
 
 			var next = this.arrowNext = new createjs.Container();
 			this.addChild(next);
@@ -2474,7 +2626,6 @@ dispatches a "change" event when changed by pressing an arrow or a keyboard arro
 			nextBacking.graphics.f("rgba(255,255,255,.01)").r(0,0,height*1.5,height*1.5);
 			nextBacking.regX = height*1.5 / 2;
 			nextBacking.regY = height*1.5 / 2 + boxSpacing/2;
-			// next.addChild(nextBacking);
 			next.hitArea = nextBacking;
 			
 			var arrowNext = new zim.Triangle(height, height*.8, height*.8, backingColor);
@@ -2483,6 +2634,7 @@ dispatches a "change" event when changed by pressing an arrow or a keyboard arro
 			
 			next.cursor = "pointer";
 			next.on("click", function(e) {step(1);});
+			box.on("click", function(e) {step(1);});
 			
 			if (vertical) {
 				next.rotation = 180;
@@ -2499,7 +2651,12 @@ dispatches a "change" event when changed by pressing an arrow or a keyboard arro
 			function step(n) {
 				var nextIndex = index + n;
 				if (!loopStepper) {
-					if (nextIndex > stepArray.length-1) return;
+					if (nextIndex > stepArray.length-1) {
+						box.cursor = "default";
+						return;
+					} else {
+						box.cursor = "pointer";
+					}
 					if (nextIndex < 0) return;
 				} else {
 					if (nextIndex > stepArray.length-1) nextIndex = 0;
@@ -2582,17 +2739,13 @@ dispatches a "change" event when changed by pressing an arrow or a keyboard arro
 					if (e.keyCode >= 37 && e.keyCode <= 40) {
 						var nextIndex;
 						if (e.keyCode == 38 || e.keyCode == 39) {
-							nextIndex = index + 1;
+							step(1);
 						} else if (e.keyCode == 37 || e.keyCode == 40) {
-							nextIndex = index - 1;
+							step(-1);
 						}
-						if (nextIndex > stepArray.length-1) return;
-						if (nextIndex < 0) return;
-						setLabel(nextIndex);
 					}
 				}
 				window.addEventListener("keydown", this.keyDownEvent); 
-				
 			}
 			
 			this.next = function() {
@@ -2617,42 +2770,282 @@ dispatches a "change" event when changed by pressing an arrow or a keyboard arro
 		
 	}	
 	
-
+	
 /*--
-zim.Parallax = function(stage, damp, layers)
+zim.Slider = function(min, max, step, button, barLength, barWidth, barColor, vertical, useTicks)
+
+Slider Class
+
+extends a createjs.Container
+a traditional slider - will give values back based on min and max and position of button (knob)
+var slider = new zim.Slider(parameters); 
+slider.on("change", function() {zog(slider.currentValue);}); 
+
+PARAMETERS
+pass in min and max amounts for slider (default 0, 10)
+step for the slider (default 0 - for continuous decimal number)
+a zim.Button (default small button with no label)
+barLength (default 300), barWidth (default 3), varColor (default #666)
+vertical (default false) for horizontal or vertical slider
+useTicks (default false) set to true to show small ticks for each step (step > 0)
+
+PROPERTIES
+currentValue - gets or sets the current value of the slider
+min, max, step - the assigned values (read only)
+bar - gives access to the bar zim.Rectangle
+button - gives access to the zim.Button
+ticks - gives access to the ticks (to position these for example)
+
+METHODS
+disable() - stops slider from working
+enable() - starts slider working if it was disabled
+dispose() - removes listeners and deletes object
+
+EVENTS
+dispatches a "change" event when button is slid on slider
+--*/	
+	zim.Slider = function(min, max, step, button, barLength, barWidth, barColor, vertical, useTicks) {
+		
+		function makeSlider() {
+			
+			// if (zon) zog("zim build - Slider");
+			
+			if (zot(min)) min = 0;
+			if (zot(max)) max = 10; 
+			if (max-min == 0) {zog("ZIM Slider range must not be 0"); return;}
+			if (zot(step)) step = 0;
+			if (zot(barLength)) barLength = 300; 
+			if (zot(barWidth)) barWidth = 3;
+			if (zot(barColor)) barColor = "#666";
+			if (zot(vertical)) vertical = false;
+			if (zot(useTicks)) useTicks = false;
+			
+			if (zot(button)) {
+				var w = 30; var h = 40;
+				if (vertical) {w = 50; h = 40;}
+				button = new zim.Button(w,h,"","#fff","#ddd","#666",1,0,null,null,30);
+			}
+			
+			var that = this;			
+			var myValue = min;
+			this.button = button;
+			
+			var bar, rect, bounds, ticks, g;
+			
+			if (useTicks && step != 0) {
+				ticks = this.ticks = new createjs.Shape();
+				this.addChild(ticks);
+				g = ticks.graphics;
+				g.ss(1).s(barColor);
+				var stepsTotal = (max - min) / step;
+				var spacing = barLength / stepsTotal;
+			}
+
+			if (vertical) {
+				if (useTicks && step != 0) {
+					for (var i=0; i<=stepsTotal; i++) {
+						g.mt(0, spacing*i).lt(20, spacing*i);
+					}
+					ticks.x = 10;					
+				}
+				bar = this.bar = new zim.Rectangle(barWidth, barLength, barColor);
+				this.addChild(bar);
+				zim.centerReg(button);
+				this.addChild(button);
+				bounds = bar.getBounds();
+				rect = new createjs.Rectangle(bounds.width/2, bounds.y, 0, bounds.height);
+			} else {
+				if (useTicks && step != 0) {
+					for (var i=0; i<=stepsTotal; i++) {
+						g.mt(spacing*i,0).lt(spacing*i,-20);
+					}
+					ticks.y = -10;					
+				}
+				bar = this.bar = new zim.Rectangle(barLength, barWidth, barColor);
+				this.addChild(bar);
+				zim.centerReg(button);
+				this.addChild(button);
+				bounds = bar.getBounds();
+				rect = new createjs.Rectangle(bounds.x, bounds.height/2, bounds.width, 0);
+			}
+			button.x = rect.x;
+			button.y = rect.y;
+			
+			function snap(v) {
+				if (step == 0) return v;
+				return Math.round(v/step)*step;	
+			}
+
+			var diffX, diffY;
+			var lastValue = 0;
+			button.on("mousedown", function(e) {
+				var point = that.globalToLocal(e.stageX, e.stageY);
+				diffX = point.x - button.x;
+				diffY = point.y - button.y;
+			});
+							
+			button.on("pressmove", function(e) {	
+				var point = that.globalToLocal(e.stageX, e.stageY);				
+				var p = checkBounds(point.x-diffX, point.y-diffY, rect); 
+				if (vertical) {
+					button.x = p.x;
+					myValue = snap(p.y / barLength * (max - min));
+					button.y = myValue * barLength / (max - min);
+					myValue += min;
+					if (button.y != lastValue) {
+						that.dispatchEvent("change");						
+					}
+					lastValue = button.y;
+				} else {
+					myValue = snap(p.x / barLength * (max - min));
+					button.x = myValue * barLength / (max - min);
+					myValue += min;
+					button.y = p.y;
+					if (button.x != lastValue) {
+						that.dispatchEvent("change");						
+					}
+					lastValue = button.x;
+				}
+				that.getStage().update();
+			});
+
+			function checkBounds(x,y,rect) {		
+				x = Math.max(rect.x, Math.min(rect.width, x));
+				y = Math.max(rect.y, Math.min(rect.height, y));
+				return {x:x,y:y}				
+			}	
+
+			Object.defineProperty(this, 'currentValue', {
+				get: function() {
+					return myValue;
+				},
+				set: function(value) {		
+					if (value < min) value = min;			
+					if (value > max) value = max;
+					value = snap(value);
+					if (vertical) {
+						button.y = (value - min) / (max - min) * barLength;
+						lastValue = button.y;
+					} else {
+						button.x = (value - min) / (max - min) * barLength;
+						lastValue = button.x;
+					}
+					if (that.getStage()) that.getStage().update(); 
+				}
+			});
+			
+			Object.defineProperty(this, 'min', {
+				get: function() {				
+					return min;
+				},
+				set: function(value) {					
+					if (zon) zog("min is read only");
+				}
+			});
+			
+			Object.defineProperty(this, 'max', {
+				get: function() {				
+					return max;
+				},
+				set: function(value) {					
+					if (zon) zog("max is read only");
+				}
+			});
+			
+			Object.defineProperty(this, 'step', {
+				get: function() {				
+					return step;
+				},
+				set: function(value) {					
+					if (zon) zog("step is read only");
+				}
+			});
+			
+			this.disable = function() {
+				that.mouseChildren = false;
+				that.mouseEnabled = false;
+			}
+			
+			this.enable = function() {
+				that.mouseChildren = true;
+				that.mouseEnabled = true;
+			}
+			
+			this.dispose = function() {
+				button.removeAllEventListeners();
+			}
+		}
+		
+		// note the actual class is wrapped in a function
+		// because createjs might not have existed at load time		
+		makeSlider.prototype = new createjs.Container();
+		makeSlider.prototype.constructor = zim.Slider;
+		return new makeSlider();
+		
+	}	
+	
+/*--
+zim.Parallax = function(stage, damp, layers, auto)
 
 Parallax Class	
 
-takes objects and moves them with a parallax effect based on mouse movement
+takes objects as layers and sets properties based on an input
+for instance, each layer could move a different x based on position of mouseX
+or each layer could scale a different amount based on scroll of y
+The types of input are mouseX, mouseY, scrollX, scrollY
+The types of properties to change could be x, y, scaleX, scaleY, rotation, alpha, frameNumber, etc.
+Parallax allows scale to be a property which scales scaleX and scaleY together
+Parallax allows frame to be a property and calls gotoAndStop() on a Sprite frame
+Parallax really just manages multiple ProportionDamp objects
 for proper parallax, the objects closer move more than the objects farther back
 make a new object: p = new zim.Parallax(parameters)
 
 PARAMETERS
-pass in the stage from your code (uses stage.mouseX and stage.mouseY)
+pass in a reference to the stage as the first parameter
 pass in the damping value (.1 default)
-pass in an array of layer objects in the following format
-[[obj, distanceX, distanceY], [obj2, distanceX, distanceY], etc.]
-or you can add these one at a time with the p.addLayer(obj, distanceX, distanceY); method
-you must pass in a layer object - the distanceX and distanceY can be 0 for no motion on that axis
-the distance is the total distance you want the layer object to travel
-relative to the cursor position between 0 and stage width or height
-the Parallax class will apply half the distance on either side of the object's start point
-should work through nested clips...
+pass in an array of layer objects in the following format:
+
+[{obj:obj, prop:"x", propChange:200, input:"scrolly", inMin:100, inMax:300, factor:1, integer:false}, etc.]
+this would move the obj 200 px in the x as the window scrolls from 100 to 300 px in the y
+
+the first three properties are required
+object is the object whose property is being changed
+prop is the property that is being changed
+propChange is how much you want the property to change
+input defaults to mouseX but can also be mouseY, scrollX, scrollY 
+the inMin defaults to 0, inMax to stageW (for x prop) stageH (for y prop)
+the factor defaults to 1 which means change is in same direction
+set factor to -1 to change in the opposite direction
+integer rounds the value to an integer 
+note, if frame is the property, the gotoAndStop() accepts decimals
+
+For instance,
+[{obj:obj, prop:"x", propChange:100}, {obj:obj, prop:"y", propChange:50, input:"mouseY"}, etc.]
+would do traditional mouse move parallax for one object
+you would probably have more objects to follow
+
+or you can add these one at a time with the p.addLayer({layer object properties});
+the auto parameter defaults to true and uses the specified input
+if auto is set to false, you must make your own Ticker and use the step(input) method
 
 METHODS 
-addLayer(obj, distanceX, distanceY) - to alternately add layers after the object is made
+addLayer({layer object properties}) - adds a layer
+removeLayer(index) - removes a layer based on order added
+step(input) - used when auto is false to send in custom input data
+immediate([]) - immediately sets the target value for each layer object (no damping)
 dispose() - removes listeners
 
 PROPERTIES
 damp - allows you to dynamically change the damping
 --*/	
-	zim.Parallax = function(stage, damp, layers) {
+	zim.Parallax = function(stage, damp, layers, auto) {
 						
 		if (zon) zog("zim build - Parallax");
 		
 		if (zot(stage) || !stage.getBounds) {zog("zim build - Parallax(): please pass in the stage with bounds as first parameter"); return;}
-		if (!stage.getBounds()) {zog("zim build - Pane(): Please give the stage bounds using setBounds()");	return;}
-
+		if (!stage.getBounds()) {zog("zim build - Parallax(): Please give the stage bounds using setBounds()");	return;}
+		if (zot(auto)) {auto = true;}
+		
 		var stageW = stage.getBounds().width;
 		var stageH = stage.getBounds().height;
 		
@@ -2660,35 +3053,60 @@ damp - allows you to dynamically change the damping
 		
 		// public properties
 		this.damp = (zot(damp)) ? .1 : damp;
-		//this.x = (zot(damp)) ? stageW/2 : x;
-		//this.y = (zot(damp)) ? stageH/2 : y;
 		
 		// public methods (do not get hoisted so define early)
 		// addLayer works as a public method
 		// and also is called from the object in case we add layers via the Parallax object parameters
-		// the function prepares ProportionDamp objects for both x and y
+		// the function prepares ProportionDamp objects for two values
 		// and stores them on the layer object
-		// and also stores the desired distances on the layer objects themselves
+		// and also stores the desired amounts on the layer objects themselves
 		// finally, the layer object is added to the myLayers private property
 		// the timer then loops through these layers and handles things from there
-		this.addLayer = function(obj, distanceX, distanceY) {
-			if (zot(obj)) return;
-			obj.zimX = zot(distanceX)?0:distanceX;
-			obj.zimY = zot(distanceY)?0:distanceY;
-			if (obj.zimX != 0) {
-				obj.zimpX = new zim.ProportionDamp(0, stageW, 0, obj.zimX, that.damp);				
+		// obj, distanceX, distanceY, minX, minY, maxX, maxY, factor, targetRound
+		this.addLayer = function(layer) {
+			//{obj, prop, propChange, input, inMin, inMax, factor, integer}
+			if (zot(layer.obj) || zot(layer.prop) || zot(layer.propChange)) return;
+			var obj = {obj:layer.obj, prop:layer.prop}; 
+			obj[obj.prop] = layer.propChange;
+			if (zot(layer.input)) layer.input = "mouseX";
+			obj.input = layer.input;
+			
+			var inMin = (zot(layer.inMin)) ? 0 : layer.inMin;
+			var inMax = (zot(layer.inMax)) ? stageW : layer.inMax;
+			var factor = (zot(layer.factor)) ? 1 : layer.factor;
+			var integer = (zot(layer.integer)) ? false : layer.integer;
+				
+			// baseMin, baseMax, targetMin, targetMax, damp, factor, targetRound
+			obj["p_"+obj.prop] = new zim.ProportionDamp(inMin, inMax, 0, obj[obj.prop], that.damp, factor, integer);				
+			if (obj.prop == "scale") {
+				obj["s_"+obj.prop] = obj.obj.scaleX; // helper to allow scale to be property
+			} else if (obj.prop == "frame") {
+				obj["s_"+obj.prop] = obj.obj.currentFrame;
+			} else {
+				obj["s_"+obj.prop] = obj.obj[obj.prop]; // obj.s_x = obj.obj.x for example
 			}
-			if (obj.zimY != 0) {
-				obj.zimpY = new zim.ProportionDamp(0, stageH, 0, obj.zimY, that.damp);				
-			}
-			obj.zimsX = obj.x;
-			obj.zimsY = obj.y;
-			myLayers.push(obj);		
+			myLayers.push(obj);
+			return myLayers.length-1;
 		}	
+		
+		this.removeLayer = function(index) {			
+			if (zot(index)) return;
+			var layer = myLayers[index];
+			layer["p_"+layer.prop].dispose();
+			myLayers.splice(index,1);
+		}	
+		
+		this.immediate = function(array) {
+			var o;
+			for (var i=0; i<myLayers.length; i++) {
+				o = myLayers[i];
+				o["p_"+o.prop].immediate(array[i]);
+			}
+		}
 		
 		this.dispose = function() {
 			myLayers = null;
-			createjs.Ticker.off("tick", ticker);
+			if (auto) createjs.Ticker.off("tick", ticker);
 		}
 		
 		// private properties
@@ -2699,32 +3117,44 @@ damp - allows you to dynamically change the damping
 		// this will add the processed layers to the private property, myLayers
 		var myLayers = [];		
 		for (var i=0; i<layers.length; i++) {			
-			this.addLayer(layers[i][0], layers[i][1], layers[i][2]);
+			this.addLayer(layers[i]);
 		}
-						
-		var ticker = createjs.Ticker.on("tick", animate);	
-		createjs.Ticker.setFPS(60);
+		
+		if (auto) {			
+			var ticker = createjs.Ticker.on("tick", animate);	
+			createjs.Ticker.setFPS(60);
+		}		
 
 		// loop though our layers and apply the converted proportion damping
 		function animate(e) {			
-			var o; var newX; var newY; var point;
+			that.step();
+		}		
+		
+		this.step = function(custom) {
+			var o; var input;
 			for (var i=0; i<myLayers.length; i++) {
-				o = myLayers[i];				
-				point = o.parent.localToGlobal(o.zimsX, o.zimsY);
-				newX = point.x;
-				newY = point.y;
-				if (o.zimX != 0) {	
-					newX = newX - o.zimX/2 + o.zimpX.convert(stage.mouseX);
+				o = myLayers[i];
+				if (zot(custom)) {
+					if (o.input == "mouseX") input = stage.mouseX;
+					else if (o.input == "mouseY") input = stage.mouseY;
+					else if (o.input == "scrollX") input = zim.scrollX();
+					else if (o.input == "scrollY") input = zim.scrollY();
+				} else {
+					input = custom;
 				}
-				if (o.zimY != 0) {
-					newY = newY - o.zimY/2 + o.zimpY.convert(stage.mouseY);					
-				}	
-				point = o.parent.globalToLocal(newX, newY);				
-				o.x = point.x;
-				o.y = point.y;
-			}
+				// damp object at property to start value + converted goal based on input
+				if (o.prop == "scale") {
+					o.obj.scaleX = o.obj.scaleY = o["s_"+o.prop] + o["p_"+o.prop].convert(input);
+				} else if (o.prop == "frame") {
+					o.obj.gotoAndStop(o["s_"+o.prop] + o["p_"+o.prop].convert(input));
+				} else {
+					o.obj[o.prop] = o["s_"+o.prop] + o["p_"+o.prop].convert(input);	
+					// for x on mouseX we split the destination range in two for a centered parallax
+					if (o.input == "mouseX") o.obj[o.prop] -= o[o.prop] / 2;
+				}
+			}			
 			stage.update();
-		}			
+		}
 	}
 	
 	
@@ -3842,6 +4272,8 @@ dispose() - clears keyboard events and guide
 					g.c().s("rgba(255,0,255,.1)").ss(20).mt(0,0).lt(objW,0);
 					g.f().s("white").ss(2).mt(0,0).lt(objW, 0);
 					g.s("#d61fa0").ss(2).dashedLineTo(0,0,objW,0,20);
+
+
 					line.cache(0,-10,objW,20);
 				}	
 				
@@ -3978,6 +4410,8 @@ dispose() - clears keyboard events and grid
 			var stage; 			
 			var pixels = 10; // for grid			
 			var stageEvent;			
+
+
 			this.mouseChildren = false;
 			this.mouseEnabled = false;			
 			
