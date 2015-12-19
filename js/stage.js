@@ -1,7 +1,10 @@
-var stage = new createjs.Stage("myCanvas"); //new createjs stage object
+//GLOBAL VARIABLES
+var canvas = document.getElementById("myCanvas")
+var stage = new createjs.Stage(canvas); //new createjs stage object
 stage.enableMouseOver(10); //10 times per second
 
-var cont = new createjs.Container(); //holds things, like a div
+//parallax container
+var cont = new createjs.Container();
 stage.addChild(cont);
 
 var layers = [];
@@ -10,7 +13,7 @@ var size;
 var moveX;
 var moveY;
 
-//decalaring public variables
+//declaring public variables (images)
 var darth;
 var car;
 var bench;
@@ -19,38 +22,48 @@ var mouse;
 
 // declaring image paths for preloaded images
 var imagePath = "img/";
-var manifest = [{
-  id: "darth",
-  src: "dv.png"
-}, {
-  id: "car",
-  src: "delorean.png"
-}, {
-  id: "mouse",
-  src: "mouse.gif"
-}, {
-  id: "bench",
-  src: "bench.png"
-}, {
-  id: "fg",
-  src: "fg.png"
-}];
+var manifest = [
+  {
+    id: "darth",
+    src: "dv.png"
+  },
+  {
+    id: "car",
+    src: "delorean.png"
+  },
+  {
+    id: "mouse",
+    src: "mouse.gif"
+  },
+  {
+    id: "bench",
+    src: "bench.png"
+  },
+  {
+    id: "fg",
+    src: "fg.png"
+  }
+];
 
 // preloading images
 var preload = new createjs.LoadQueue(false, imagePath);
 preload.loadManifest(manifest);
 preload.on("complete", load);
 
+function load() {
+  createjs.Ticker.on("tick", stage);
+}
+
 // making function that summons darth vader *cue imperial march*
 function vader() {
   // adding darth image to global variable
   darth = new createjs.Bitmap(preload.getResult("darth"));
   zim.scale(darth, 0.1);
-  darth.x = 400;
+  darth.x = 300;
   cont.addChild(darth);
   stage.update();
 
-// mouse hints to user to move mouse on canvas area..preloading mouse below
+  // mouse hints to user to move mouse on canvas area..draw mouse below
   mouse = new createjs.Bitmap(preload.getResult("mouse"));
   cont.addChild(mouse);
   zim.scale(mouse, 0.25);
@@ -58,7 +71,7 @@ function vader() {
   mouse.y = 90;
   mouse.alpha = 0;
 
-//tweening darth to the appear from the dephts of the backgroud
+  //tweening darth to the appear from the depths of the background
   createjs.Tween.get(darth)
     .to({
       scaleX: 0.75,
@@ -66,7 +79,7 @@ function vader() {
     }, 2000)
     .call(parallaxGo);
 
-//mouse highlight tweens only after darth has made his presence felt
+    //mouse highlight tweens only after darth has made his presence felt
   setTimeout(function() {
     createjs.Tween.get(mouse)
       .to({
@@ -93,17 +106,17 @@ function vader() {
 
   stage.update();
 }
-//this function calls the delorean to year 2015. Not really...just calls in on screen
+
+//this function calls the delorean to year 2015. Not really...just calls in onscreen
 function lorean() {
   //adding delorean image to global variable car
   car = new createjs.Bitmap(preload.getResult("car"));
   cont.addChild(car);
   zim.scale(car, 0.5);
   car.x = 900;
-  car.y = 150;
+  car.y = 175;
 
-
-  // mouse hints to user to move mouse on canvas area..preloading mouse below
+  // mouse hints to user to move mouse on canvas area..drawing mouse below
   mouse = new createjs.Bitmap(preload.getResult("mouse"));
   cont.addChild(mouse);
   zim.scale(mouse, 0.25);
@@ -136,32 +149,33 @@ function lorean() {
       }, 250);
   }, 1000)
 
-  // animation
+  // animation (entering)
   createjs.Tween.get(car)
     .to({
       x: 200,
-      y: 150
+      y: 175
     }, 800, createjs.Ease.bounceOut)
     .call(parallaxGod);//after tween is done run a parallax on it
+
   stage.update();
 }
 
-//this function calls calls Forest Gump on screen
+//this function calls calls Forrest Gump on screen
 function fg() {
   //adding bench image to global variable bench
   bench = new createjs.Bitmap(preload.getResult("bench"));
   cont.addChild(bench);
   zim.scale(bench, 0.11);
   bench.x = 200;
-  bench.y = 60;
+  bench.y = 70;
 
   //adding Forest Gump image to global variable fg
   fg = new createjs.Bitmap(preload.getResult("fg"));
   cont.addChild(fg);
   zim.scale(fg, 0.2);
   fg.x = 300;
+  fg.y =20;
   fg.alpha = 0;
-  // fg.y = 10;
 
   createjs.Tween.get(fg)
     .to({
@@ -175,20 +189,16 @@ function fg() {
 //parallax for darth
 function parallaxGo() {
   setTimeout(function() {
+    darth.x = 100;
     var parallax = new zim.Parallax(stage, .1, [{
       obj: darth,
       prop: "x",
-      propChange: -650,
+      propChange: -400,
       input: "mouseX",
       inMin: 0,
       inMax: 500
     }]);
   }, 500)
-  console.log("parallax");
-}
-
-function load() {
-  createjs.Ticker.on("tick", stage);
 }
 
 //parallax for delorean
@@ -197,16 +207,15 @@ function parallaxGod() {
     var parallax = new zim.Parallax(stage, .1, [{
       obj: car,
       prop: "x",
-      propChange: -450,
+      propChange: -400,
       input: "mouseX",
       inMin: 0,
       inMax: 500
     }]);
   }, 2000)
-  console.log("parallax2");
 }
 
-//parallax for Forest....run forest!!
+//parallax for Forrest....run Forrest!!
 function parallaxRunF() {
   setTimeout(function() {
     var parallax = new zim.Parallax(stage, .1, [{
@@ -218,5 +227,4 @@ function parallaxRunF() {
       inMax: 500
     }]);
   }, 2000)
-  console.log("parallax3");
 }

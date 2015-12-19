@@ -64,10 +64,10 @@ window.addEventListener('load',function(){
       // the window size differs slightly so a slight offset is added to make sure that the
       // select image is properly centered in the window!
       if (prevLeft > target.offsetLeft){ //moving left
-        document.getElementById("items").style.left =target.offsetLeft*-1 + windSize - 91 + "px";
+        document.getElementById("items").style.left =target.offsetLeft*-1 + windSize - 130 + "px";
       }
       else{ //moving right
-        document.getElementById("items").style.left =target.offsetLeft*-1 + windSize - exSize + "px";
+        document.getElementById("items").style.left =target.offsetLeft*-1 + windSize - 100 + "px";
       }
 
       //creates a div to display the title/year of the movie

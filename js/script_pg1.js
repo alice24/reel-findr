@@ -38,6 +38,7 @@ window.onload = function() {
 //when the window is resized, also adjust the height of the div
 $(window).resize(function() {
 	adjustHeight();
+	console.log("resizing");
 });
 
 //this function is linked to all the clickable buttons with an answer
@@ -53,8 +54,8 @@ function chooseAnswer(){
 //this function changes the question
 function nextQuestion(){
 	//set the current page's order to the value of the reverse counter, which should make it the lowest div on the page
-	document.getElementById(pages[counter]).style.order = reverseCounter;
-
+	document.getElementById(pages[counter]).style.order = reverseCounter.toString();
+	document.getElementById(pages[counter]).classList.add("hideCanvas");
 	//increment both counters
 	reverseCounter ++;
 	counter++; //as this counter has been incremented, a new page is now set to be shown
@@ -65,7 +66,7 @@ function nextQuestion(){
 	//adjust the height of the div to show the new page
 	adjustHeight();
 
-	// ------Adding this code to call the animations only on the required pages----//
+	//This code calls the animations only on the required pages.
  	if (pages[counter]=="page3"){
 		vader();
 		document.getElementById('myCanvas').classList.remove("hideCanvas");
@@ -86,11 +87,14 @@ function nextQuestion(){
 //this div adjusts the height of the overflow div so that only the proper div is shown
 function adjustHeight(){
 	//get the div overflow object and the div to be displayed
+	console.log(pages[counter]);
 	container = document.getElementById('overflow');
 	client = document.getElementById(pages[counter]);
 
 	//get the new height...
 	clientHeight = client.clientHeight;
+
+	console.log(clientHeight);
 
 	//and set it.
 	container.style.height = clientHeight+"px";
